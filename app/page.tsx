@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import Header from './components/Header';
+import Hero from './components/home/Hero';
 
 export default function Home() {
 
@@ -218,64 +219,7 @@ export default function Home() {
     <div className="relative min-h-screen bg-bg text-primary">
       <Header />
 
-                <header className="relative flex h-screen w-full items-center justify-center overflow-hidden bg-black">
-                  <div className="absolute inset-0">
-                    <div className="absolute inset-0 scale-[1.06]">
-                      {/* Desktop video */}
-                      <video
-                        className="hidden md:block h-full w-full object-cover"
-                        autoPlay
-                        muted
-                        loop
-                        playsInline
-                        preload="auto"
-                      >
-                        <source src="/videos/hero_compressed.mp4" type="video/mp4" />
-                      </video>
-                      {/* Mobile video - uses same for now, add mobile version later */}
-                      <video
-                        className="md:hidden h-full w-full object-cover"
-                        autoPlay
-                        muted
-                        loop
-                        playsInline
-                        preload="auto"
-                      >
-                        <source src="/videos/hero_compressed.mp4" type="video/mp4" />
-                      </video>
-                    </div>
-                  </div>
-
-                  <div className="relative z-10 flex flex-col items-center justify-center text-center text-white px-6">
-                    <div className="mb-6 md:mb-8">
-                      <span className="font-mono text-xs uppercase tracking-[0.35em] text-[#a8c4d4]">00 — Welcome</span>
-                    </div>
-                    <h1 className="flex flex-col items-center font-display text-[15vw] leading-[0.85] tracking-tight md:text-[10vw] text-glow">
-                        <span className="drop-shadow-xl">APEX</span>
-                        <span className="relative" style={{ 
-                          backgroundImage: 'linear-gradient(135deg, #5a7a8a 0%, #7a9aa8 40%, #8eb4c2 70%, #6a8a98 100%)',
-                          backgroundClip: 'text',
-                          WebkitBackgroundClip: 'text',
-                          WebkitTextFillColor: 'transparent',
-                          textShadow: 'none',
-                          letterSpacing: 'inherit',
-                          filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.2))'
-                        }}>IMAGING</span>
-                      </h1>
-                      <p className="mx-auto mt-6 md:mt-8 max-w-xl text-sm md:text-base text-white/80">
-                        Aerial cinematography for real estate, automotive, tourism, construction, events, and marine.
-                      </p>
-                  </div>
-
-                  <div className="absolute bottom-6 md:bottom-10 left-6 z-10 hidden md:flex flex-col gap-1 text-white">
-                    <div className="flex items-center gap-2 text-xs font-mono tracking-[0.25em]">
-                      <span>51.5074° N</span>
-                      <span className="h-px w-6 bg-white/40" />
-                      <span>0.1278° W</span>
-                    </div>
-                    <span className="text-[10px] uppercase tracking-[0.35em] text-white/60">London & Surrounding Areas</span>
-                  </div>
-                </header>
+      <Hero />
 
                 <main className="wrapper relative z-10 bg-bg">
                   <section className="px-6 py-20 md:py-24 md:px-12 lg:px-24 bg-[#5a6d78]">
@@ -723,14 +667,16 @@ export default function Home() {
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 md:gap-8">
                         {/* Brand */}
                         <div>
+                          {/* Brand: HK imaging in footer */}
                           <div className="flex items-center gap-3 mb-6">
                             <div className="flex h-10 w-10 items-center justify-center rounded-full border border-white/30">
                               <span className="h-1.5 w-1.5 rounded-full bg-[#7a9aa8]" />
                             </div>
-                            <span className="font-display text-xl tracking-tight text-white">APEX</span>
+                            <span className="font-display text-xl tracking-tight text-white">HK</span>
                           </div>
+                          {/* Description: clarify service area */}
                           <p className="text-sm text-white/60 leading-relaxed">
-                            Cinema-grade drone cinematography for real estate, automotive, tourism, and marine projects across London and the UK.
+                            Cinema-grade drone cinematography for real estate, automotive, tourism, and marine projects across North London and the UK.
                           </p>
                         </div>
 

@@ -84,6 +84,9 @@ export default function PortfolioPage() {
 
       <Header />
       <style jsx global>{`
+        body, .portfolio-bg {
+          background: #10151a !important;
+        }
         .page-loader {
           position: fixed;
           top: 0;
@@ -479,25 +482,20 @@ export default function PortfolioPage() {
         }
       `}</style>
 
-      <div className="hero-section">
-        <div className="section-center">
-          <div className="container-fluid">
-            <div className="row justify-content-center">
-              <div className="col-12 text-center">
-                <h1>Apex<br />Imaging</h1>
-              </div>
-              <div className="col-12 text-center mb-2">
-                <div className="dancing"><span>portfolio</span></div>
-              </div>
-              <div className="col-12 text-center">
-                <p>
-                  <span className="fpv hover-target">FPV</span>
-                  <span className="cinematic hover-target">Cinematic</span>
-                  <span className="neo1 hover-target">Indoor</span>
-                  <span className="camera hover-target">Camera Work</span>
-                </p>
-              </div>
-            </div>
+      {/* Truly dark themed hero section for portfolio */}
+      <div className="portfolio-bg hero-section bg-[#10151a] py-24 md:py-32 border-b border-[#232b32]">
+        <div className="flex flex-col items-center justify-center text-center">
+          <h1 className="font-extrabold text-white text-6xl md:text-8xl tracking-tight mb-4" style={{letterSpacing: '0.04em'}}>
+            HK
+          </h1>
+          <h2 className="font-extrabold text-[#7a9aa8] text-5xl md:text-7xl tracking-tight mb-6" style={{letterSpacing: '0.04em'}}>
+            IMAGING
+          </h2>
+          <div className="flex flex-wrap gap-6 justify-center mt-4">
+            <span className="fpv hover-target text-lg md:text-xl font-semibold text-white hover:text-[#7a9aa8] cursor-pointer transition">FPV</span>
+            <span className="cinematic hover-target text-lg md:text-xl font-semibold text-white hover:text-[#7a9aa8] cursor-pointer transition">Cinematic</span>
+            <span className="neo1 hover-target text-lg md:text-xl font-semibold text-white hover:text-[#7a9aa8] cursor-pointer transition">Indoor</span>
+            <span className="camera hover-target text-lg md:text-xl font-semibold text-white hover:text-[#7a9aa8] cursor-pointer transition">Camera Work</span>
           </div>
         </div>
       </div>

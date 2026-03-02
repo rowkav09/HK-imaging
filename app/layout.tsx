@@ -8,10 +8,11 @@ const inter = Inter({ subsets: ["latin"], display: "swap", variable: "--font-int
 const spaceGrotesk = Space_Grotesk({ subsets: ["latin"], display: "swap", variable: "--font-space-grotesk" });
 
 export const metadata: Metadata = {
-  title: "Apex Imaging | Professional Drone Cinematography",
-  description: "Apex Imaging - Professional drone cinematography services. Capturing stunning perspectives with cinematic quality and natural artistry.",
+  title: "HK imaging | Professional Drone Cinematography",
+  description: "HK imaging - Professional drone cinematography services. Capturing stunning perspectives with cinematic quality and natural artistry.",
 };
 
+// RootLayout: wraps all pages, sets up global fonts and analytics
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -20,7 +21,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`antialiased bg-bg text-primary ${inter.variable} ${spaceGrotesk.variable}`}>
+        {/* Main app content */}
         {children}
+        {/* Vercel Analytics */}
         <Analytics />
       </body>
     </html>

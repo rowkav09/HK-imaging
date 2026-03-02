@@ -435,12 +435,13 @@ export default function PortfolioPage() {
         }
       `}</style>
 
+      {/* Hero section: brand and quick links */}
       <div className="hero-section">
         <div className="section-center">
           <div className="container-fluid">
             <div className="row justify-content-center">
               <div className="col-12 text-center">
-                <h1>Apex<br />Imaging</h1>
+                <h1>HK<br />imaging</h1>
               </div>
               <div className="col-12 text-center mb-2">
                 <div className="dancing"><span>portfolio</span></div>
