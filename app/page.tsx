@@ -269,9 +269,9 @@ export default function Home() {
                   <section id="portfolio" className="relative px-6 py-20 md:py-24 md:px-12 lg:px-24 overflow-hidden bg-surface w-full">
                     <div className="relative mx-auto max-w-7xl">
                       <div className="mb-10 md:mb-12">
-                        <span className="font-mono text-xs uppercase tracking-[0.35em] text-primary">02 — Portfolio</span>
-                        <h2 className="mt-4 font-display text-3xl tracking-tight text-text md:text-5xl lg:text-6xl">Featured Work</h2>
-                        <p className="mt-4 max-w-2xl text-sm text-primary leading-relaxed">From serene landscapes to towering structures, each project showcases our mastery of aerial cinematography.</p>
+                        <span className="font-mono text-xs uppercase tracking-[0.35em] text-neutral-500">02 — Portfolio</span>
+                        <h2 className="mt-4 font-display text-3xl tracking-tight text-neutral-900 md:text-5xl lg:text-6xl">Featured Work</h2>
+                        <p className="mt-4 max-w-2xl text-sm text-neutral-700 leading-relaxed">From serene landscapes to towering structures, each project showcases our mastery of aerial cinematography.</p>
                       </div>
 
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -295,9 +295,9 @@ export default function Home() {
                             <div className="absolute inset-0 bg-gradient-to-t from-bg/80 via-bg/30 to-transparent" />
                             
                             <div className="absolute inset-0 p-5 flex flex-col justify-end">
-                              <span className="px-2 py-0.5 rounded text-[9px] font-medium bg-primary text-text uppercase tracking-wide w-fit mb-2">{project.tag}</span>
-                              <h3 className="text-lg font-medium text-text tracking-tight">{project.title}</h3>
-                              <p className="text-xs text-text/60 mt-1">{project.location}</p>
+                              <span className="px-2 py-0.5 rounded text-[9px] font-medium bg-primary text-neutral-100 uppercase tracking-wide w-fit mb-2">{project.tag}</span>
+                              <h3 className="text-lg font-medium text-neutral-900 tracking-tight">{project.title}</h3>
+                              <p className="text-xs text-neutral-700 mt-1">{project.location}</p>
                             </div>
                           </div>
                         ))}
