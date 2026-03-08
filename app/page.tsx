@@ -1,8 +1,10 @@
 'use client';
 
 import { useEffect } from "react";
+
 import Header from './components/Header';
 import Hero from './components/home/Hero';
+import { Footer } from '../components/ui/footer-section';
 
 export default function Home() {
 
@@ -216,48 +218,47 @@ export default function Home() {
             ];
 
   return (
-    <div className="relative min-h-screen bg-bg text-primary">
+    <>
       <Header />
-
       <Hero />
-
-                <main className="wrapper relative z-10 bg-bg">
-                  <section className="px-6 py-20 md:py-24 md:px-12 lg:px-24 bg-[#5a6d78]">
+      <div className="relative min-h-screen bg-bg text-primary">
+        <main className="wrapper relative z-10 bg-bg">
+                  <section className="px-6 py-20 md:py-24 md:px-12 lg:px-24 bg-primary">
                     <div className="max-w-7xl mx-auto">
                       <div className="mb-10 md:mb-12">
-                        <span className="font-mono text-xs uppercase tracking-[0.35em] text-[#a8c4d4]">01 — Manifesto</span>
-                        <h2 className="mt-4 font-display text-3xl leading-[1.1] tracking-tight text-white md:text-5xl lg:text-6xl">Our Vision</h2>
+                        <span className="font-mono text-xs uppercase tracking-[0.35em] text-accent">01 — Manifesto</span>
+                        <h2 className="mt-4 font-display text-3xl leading-[1.1] tracking-tight text-text md:text-5xl lg:text-6xl">Our Vision</h2>
                       </div>
                       <div className="space-y-8">
-                        <p className="font-display text-xl leading-[1.3] text-white/90 md:text-2xl lg:text-3xl max-w-4xl">
+                        <p className="font-display text-xl leading-[1.3] text-text/90 md:text-2xl lg:text-3xl max-w-4xl">
                           We create aerial stories across real estate, automotive, tourism, construction, events, and marine.
-                          <span className="italic text-[#a8c4d4]"> Cinematic drone coverage </span>
+                          <span className="italic text-accent"> Cinematic drone coverage </span>
                           that makes every project feel intentional and premium.
                         </p>
-                        <div className="grid grid-cols-2 gap-6 md:grid-cols-3 lg:gap-8 pt-6 border-t border-white/20">
+                        <div className="grid grid-cols-2 gap-6 md:grid-cols-3 lg:gap-8 pt-6 border-t border-border/20">
                           <div className="space-y-1">
-                            <span className="text-sm font-medium text-white">Real Estate</span>
-                            <p className="text-xs text-white/60">Interiors, exteriors, neighbourhood context, and luxury listings.</p>
+                            <span className="text-sm font-medium text-text">Real Estate</span>
+                            <p className="text-xs text-text/60">Interiors, exteriors, neighbourhood context, and luxury listings.</p>
                           </div>
                           <div className="space-y-1">
-                            <span className="text-sm font-medium text-white">Automotive</span>
-                            <p className="text-xs text-white/60">FPV chase sequences, rolling shots, and hero passes.</p>
+                            <span className="text-sm font-medium text-text">Automotive</span>
+                            <p className="text-xs text-text/60">FPV chase sequences, rolling shots, and hero passes.</p>
                           </div>
                           <div className="space-y-1">
-                            <span className="text-sm font-medium text-white">Tourism & Hospitality</span>
-                            <p className="text-xs text-white/60">Resorts, interiors, venues, and destination highlights.</p>
+                            <span className="text-sm font-medium text-text">Tourism & Hospitality</span>
+                            <p className="text-xs text-text/60">Resorts, interiors, venues, and destination highlights.</p>
                           </div>
                           <div className="space-y-1">
-                            <span className="text-sm font-medium text-white">Construction</span>
-                            <p className="text-xs text-white/60">Progress tracking, site context, and project timelines.</p>
+                            <span className="text-sm font-medium text-text">Construction</span>
+                            <p className="text-xs text-text/60">Progress tracking, site context, and project timelines.</p>
                           </div>
                           <div className="space-y-1">
-                            <span className="text-sm font-medium text-white">Events</span>
-                            <p className="text-xs text-white/60">Cinematic event films and highlight edits.</p>
+                            <span className="text-sm font-medium text-text">Events</span>
+                            <p className="text-xs text-text/60">Cinematic event films and highlight edits.</p>
                           </div>
                           <div className="space-y-1">
-                            <span className="text-sm font-medium text-white">Marine</span>
-                            <p className="text-xs text-white/60">Yachts, marinas, and coastal visuals.</p>
+                            <span className="text-sm font-medium text-text">Marine</span>
+                            <p className="text-xs text-text/60">Yachts, marinas, and coastal visuals.</p>
                           </div>
                         </div>
                       </div>
@@ -265,12 +266,12 @@ export default function Home() {
                   </section>
 
                   {/* Featured Work - moved up */}
-                  <section id="portfolio" className="relative px-6 py-20 md:py-24 md:px-12 lg:px-24 overflow-hidden bg-[#f4f2ef] w-full">
+                  <section id="portfolio" className="relative px-6 py-20 md:py-24 md:px-12 lg:px-24 overflow-hidden bg-surface w-full">
                     <div className="relative mx-auto max-w-7xl">
                       <div className="mb-10 md:mb-12">
-                        <span className="font-mono text-xs uppercase tracking-[0.35em] text-[#5a6d78]">02 — Portfolio</span>
-                        <h2 className="mt-4 font-display text-3xl tracking-tight text-[#3d5a66] md:text-5xl lg:text-6xl">Featured Work</h2>
-                        <p className="mt-4 max-w-2xl text-sm text-[#5a6d78] leading-relaxed">From serene landscapes to towering structures, each project showcases our mastery of aerial cinematography.</p>
+                        <span className="font-mono text-xs uppercase tracking-[0.35em] text-primary">02 — Portfolio</span>
+                        <h2 className="mt-4 font-display text-3xl tracking-tight text-text md:text-5xl lg:text-6xl">Featured Work</h2>
+                        <p className="mt-4 max-w-2xl text-sm text-primary leading-relaxed">From serene landscapes to towering structures, each project showcases our mastery of aerial cinematography.</p>
                       </div>
 
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -279,7 +280,7 @@ export default function Home() {
                             key={project.title} 
                             className="group relative w-full aspect-[4/3] rounded-xl overflow-hidden shadow-lg"
                           >
-                            <div className="absolute inset-0 bg-neutral-800">
+                            <div className="absolute inset-0 bg-surface">
                               <video
                                 className="h-full w-full object-cover"
                                 autoPlay
@@ -291,12 +292,12 @@ export default function Home() {
                                 <source src={project.video} type="video/mp4" />
                               </video>
                             </div>
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+                            <div className="absolute inset-0 bg-gradient-to-t from-bg/80 via-bg/30 to-transparent" />
                             
                             <div className="absolute inset-0 p-5 flex flex-col justify-end">
-                              <span className="px-2 py-0.5 rounded text-[9px] font-medium bg-[#7a9aa8] text-white uppercase tracking-wide w-fit mb-2">{project.tag}</span>
-                              <h3 className="text-lg font-medium text-white tracking-tight">{project.title}</h3>
-                              <p className="text-xs text-white/60 mt-1">{project.location}</p>
+                              <span className="px-2 py-0.5 rounded text-[9px] font-medium bg-primary text-text uppercase tracking-wide w-fit mb-2">{project.tag}</span>
+                              <h3 className="text-lg font-medium text-text tracking-tight">{project.title}</h3>
+                              <p className="text-xs text-text/60 mt-1">{project.location}</p>
                             </div>
                           </div>
                         ))}
@@ -304,12 +305,12 @@ export default function Home() {
                     </div>
                   </section>
 
-                  <section className="py-10 bg-[#5a6d78] overflow-hidden relative">
-                    <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-[#5a6d78] to-transparent z-10"></div>
-                    <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-[#5a6d78] to-transparent z-10"></div>
+                  <section className="py-10 bg-primary overflow-hidden relative">
+                    <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-primary to-transparent z-10"></div>
+                    <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-primary to-transparent z-10"></div>
                     
                     <div className="flex w-max animate-marquee items-center">
-                      <div className="flex gap-20 px-10 text-white/60 font-medium tracking-widest text-sm uppercase">
+                      <div className="flex gap-20 px-10 text-text/60 font-medium tracking-widest text-sm uppercase">
                         <span>Real Estate</span>
                         <span>Automotive</span>
                         <span>Tourism</span>
@@ -628,12 +629,12 @@ export default function Home() {
                     </div>
                   </section>
 
-                  <section className="px-6 py-20 md:py-24 md:px-12 lg:px-24 bg-[#5a6d78]">
+                  <section className="px-6 py-20 md:py-24 md:px-12 lg:px-24 bg-primary text-text">
                     <div className="max-w-7xl mx-auto">
                       <div className="mb-10 md:mb-14">
-                        <span className="font-mono text-xs uppercase tracking-[0.35em] text-[#a8c4d4]">05 — Gallery</span>
-                        <h2 className="mt-4 font-display text-3xl md:text-5xl lg:text-6xl text-white">Recent Flights</h2>
-                        <p className="mt-4 text-sm text-white/70">Client-ready selects from our cinematic drone work.</p>
+                        <span className="font-mono text-xs uppercase tracking-[0.35em] text-accent">05 — Gallery</span>
+                        <h2 className="mt-4 font-display text-3xl md:text-5xl lg:text-6xl text-text">Recent Flights</h2>
+                        <p className="mt-4 text-sm text-text/70">Client-ready selects from our cinematic drone work.</p>
                       </div>
                       <div className="grid h-[35vh] md:h-[45vh] grid-cols-2 gap-3 md:gap-4 md:grid-cols-4">
                       {gallery.map((videoSrc, idx) => (
@@ -652,7 +653,7 @@ export default function Home() {
                             <source src={videoSrc} type="video/mp4" />
                           </video>
                           <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/70 to-transparent" />
-                          <span className="absolute bottom-3 left-3 font-mono text-[11px] uppercase tracking-[0.2em] text-white font-medium">
+                          <span className="absolute bottom-3 left-3 font-mono text-[11px] uppercase tracking-[0.2em] text-text font-medium">
                             {idx === 0 ? "Highland Trail" : idx === 1 ? "Forest Path" : idx === 2 ? "Still Waters" : "Yacht Glide"}
                           </span>
                         </div>
@@ -662,57 +663,9 @@ export default function Home() {
                   </section>
 
                   {/* Footer */}
-                  <footer id="contact" className="relative bg-[#3d5a66] px-6 py-20 md:px-12 lg:px-24">
-                    <div className="max-w-7xl mx-auto">
-                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 md:gap-8">
-                        {/* Brand */}
-                        <div>
-                          {/* Brand: HK imaging in footer */}
-                          <div className="flex items-center gap-3 mb-6">
-                            <div className="flex h-10 w-10 items-center justify-center rounded-full border border-white/30">
-                              <span className="h-1.5 w-1.5 rounded-full bg-[#7a9aa8]" />
-                            </div>
-                            <span className="font-display text-xl tracking-tight text-white">HK</span>
-                          </div>
-                          {/* Description: clarify service area */}
-                          <p className="text-sm text-white/60 leading-relaxed">
-                            Cinema-grade drone cinematography for real estate, automotive, tourism, and marine projects across North London and the UK.
-                          </p>
-                        </div>
-
-                        {/* Services */}
-                        <div>
-                          <h4 className="text-xs font-medium uppercase tracking-[0.2em] text-[#7a9aa8] mb-4">Services</h4>
-                          <ul className="space-y-2 text-sm text-white/60">
-                            <li><button onClick={() => { const el = document.getElementById('pkg-real-estate'); const carousel = document.getElementById('packages-carousel'); if (el && carousel) { el.scrollIntoView({ behavior: 'smooth', block: 'center' }); setTimeout(() => { carousel.scrollTo({ left: el.offsetLeft - carousel.offsetWidth / 2 + el.offsetWidth / 2, behavior: 'smooth' }); }, 500); }}} className="hover:text-white transition-colors text-left">Real Estate</button></li>
-                            <li><button onClick={() => { const el = document.getElementById('pkg-automotive-cinematic'); const carousel = document.getElementById('packages-carousel'); if (el && carousel) { el.scrollIntoView({ behavior: 'smooth', block: 'center' }); setTimeout(() => { carousel.scrollTo({ left: el.offsetLeft - carousel.offsetWidth / 2 + el.offsetWidth / 2, behavior: 'smooth' }); }, 500); }}} className="hover:text-white transition-colors text-left">Automotive</button></li>
-                            <li><button onClick={() => { const el = document.getElementById('pkg-tourism'); const carousel = document.getElementById('packages-carousel'); if (el && carousel) { el.scrollIntoView({ behavior: 'smooth', block: 'center' }); setTimeout(() => { carousel.scrollTo({ left: el.offsetLeft - carousel.offsetWidth / 2 + el.offsetWidth / 2, behavior: 'smooth' }); }, 500); }}} className="hover:text-white transition-colors text-left">Tourism & Hospitality</button></li>
-                            <li><button onClick={() => { const el = document.getElementById('pkg-construction'); const carousel = document.getElementById('packages-carousel'); if (el && carousel) { el.scrollIntoView({ behavior: 'smooth', block: 'center' }); setTimeout(() => { carousel.scrollTo({ left: el.offsetLeft - carousel.offsetWidth / 2 + el.offsetWidth / 2, behavior: 'smooth' }); }, 500); }}} className="hover:text-white transition-colors text-left">Construction</button></li>
-                            <li><button onClick={() => { const el = document.getElementById('pkg-events'); const carousel = document.getElementById('packages-carousel'); if (el && carousel) { el.scrollIntoView({ behavior: 'smooth', block: 'center' }); setTimeout(() => { carousel.scrollTo({ left: el.offsetLeft - carousel.offsetWidth / 2 + el.offsetWidth / 2, behavior: 'smooth' }); }, 500); }}} className="hover:text-white transition-colors text-left">Events</button></li>
-                            <li><button onClick={() => { const el = document.getElementById('pkg-marine'); const carousel = document.getElementById('packages-carousel'); if (el && carousel) { el.scrollIntoView({ behavior: 'smooth', block: 'center' }); setTimeout(() => { carousel.scrollTo({ left: el.offsetLeft - carousel.offsetWidth / 2 + el.offsetWidth / 2, behavior: 'smooth' }); }, 500); }}} className="hover:text-white transition-colors text-left">Marine</button></li>
-                          </ul>
-                        </div>
-
-                        {/* Contact */}
-                        <div>
-                          <h4 className="text-xs font-medium uppercase tracking-[0.2em] text-[#7a9aa8] mb-4">Contact</h4>
-                          <ul className="space-y-2 text-sm text-white/60">
-                            <li className="flex items-center gap-2">
-                              <span className="text-[#7a9aa8]">✉</span>
-                              <a href="mailto:rowkav0809@gmail.com" className="hover:text-white transition-colors">rowkav0809@gmail.com</a>
-                            </li>
-                            <li className="flex items-start gap-2 mt-4">
-                              <span className="text-[#7a9aa8] mt-0.5">◎</span>
-                              <span>London & UK Wide<br />Available for international projects</span>
-                            </li>
-                          </ul>
-                        </div>
-
-
-                      </div>
-                    </div>
-                  </footer>
+                  <Footer />
                 </main>
               </div>
-            );
+        </>
+      );
 }

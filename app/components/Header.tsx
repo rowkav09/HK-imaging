@@ -9,11 +9,12 @@ export default function Header() {
   const [showNav, setShowNav] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
-  const isPortfolioPage = pathname === '/portfolio' || pathname === '/team';
+  const isPortfolioOrTeam = pathname === '/portfolio' || pathname === '/team';
+  const isHomePage = pathname === '/';
 
-  // Show nav on scroll, or always on portfolio page
+  // Show nav on scroll, or always on portfolio or team page
   useEffect(() => {
-    if (isPortfolioPage) {
+    if (isPortfolioOrTeam) {
       setShowNav(true);
       return;
     }
@@ -22,7 +23,7 @@ export default function Header() {
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [isPortfolioPage]);
+  }, [isPortfolioOrTeam]);
 
   return (
     <>
@@ -76,7 +77,7 @@ export default function Header() {
 
       {/* Sticky Navigation Header: appears after scroll or on portfolio page */}
       <nav
-        className={`fixed top-0 left-0 w-full z-40 bg-black/80 border-b border-white/10 transition-all duration-300 ease-out ${
+        className={`fixed top-0 left-0 w-full z-40 ${(isPortfolioOrTeam) ? 'bg-transparent border-none' : 'bg-[#23422a] border-b border-green-900/30'} transition-all duration-300 ease-out ${
           showNav ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-6 pointer-events-none'
         }`}
         aria-hidden={!showNav}
@@ -84,10 +85,12 @@ export default function Header() {
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
           {/* Brand: HK imaging logo and text */}
           <Link href="/" className="flex items-center gap-3 no-underline" style={{ textDecoration: 'none' }}>
-            <div className="flex h-10 w-10 items-center justify-center rounded-full border border-white/30">
-              <span className="h-1.5 w-1.5 rounded-full bg-white" />
-            </div>
-            <span className="font-display text-lg tracking-tight text-white no-underline">HK</span>
+            <img
+              src="/HK imaging logo png.png"
+              alt="HK imaging logo"
+              className="h-10 w-auto object-contain"
+              style={{ boxShadow: 'none', background: 'none', borderRadius: 0, padding: 0 }}
+            />
           </Link>
 
           <div className="flex items-center gap-4">

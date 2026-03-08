@@ -5,6 +5,8 @@ import Link from "next/link";
 import Script from "next/script";
 import Header from '../components/Header';
 
+import { MeshGradient } from "@paper-design/shaders-react";
+
 export default function PortfolioPage() {
   const [isLoading, setIsLoading] = useState(true);
 
@@ -483,22 +485,28 @@ export default function PortfolioPage() {
       `}</style>
 
       {/* Truly dark themed hero section for portfolio */}
-      <div className="portfolio-bg hero-section bg-[#10151a] py-24 md:py-32 border-b border-[#232b32]">
-        <div className="flex flex-col items-center justify-center text-center">
-          <h1 className="font-extrabold text-white text-6xl md:text-8xl tracking-tight mb-4" style={{letterSpacing: '0.04em'}}>
-            HK
-          </h1>
-          <h2 className="font-extrabold text-[#7a9aa8] text-5xl md:text-7xl tracking-tight mb-6" style={{letterSpacing: '0.04em'}}>
-            IMAGING
-          </h2>
-          <div className="flex flex-wrap gap-6 justify-center mt-4">
-            <span className="fpv hover-target text-lg md:text-xl font-semibold text-white hover:text-[#7a9aa8] cursor-pointer transition">FPV</span>
-            <span className="cinematic hover-target text-lg md:text-xl font-semibold text-white hover:text-[#7a9aa8] cursor-pointer transition">Cinematic</span>
-            <span className="neo1 hover-target text-lg md:text-xl font-semibold text-white hover:text-[#7a9aa8] cursor-pointer transition">Indoor</span>
-            <span className="camera hover-target text-lg md:text-xl font-semibold text-white hover:text-[#7a9aa8] cursor-pointer transition">Camera Work</span>
+        <div className="portfolio-bg hero-section bg-[#10151a] py-24 md:py-32 border-b border-[#232b32] relative overflow-hidden">
+          {/* Animated background using MeshGradient */}
+          <MeshGradient
+            className="absolute inset-0 w-full h-full z-0"
+            colors={["#181c1b", "#232825", "#7bbfae", "#eab676"]}
+            speed={1.0}
+          />
+          <div className="flex flex-col items-center justify-center text-center relative z-10">
+            <h1 className="font-extrabold text-white text-6xl md:text-8xl tracking-tight mb-4" style={{letterSpacing: '0.04em'}}>
+              HK
+            </h1>
+            <h2 className="font-extrabold text-[#7a9aa8] text-5xl md:text-7xl tracking-tight mb-6" style={{letterSpacing: '0.04em'}}>
+              IMAGING
+            </h2>
+            <div className="flex flex-wrap gap-6 justify-center mt-4">
+              <span className="fpv hover-target text-lg md:text-xl font-semibold text-white hover:text-[#7a9aa8] cursor-pointer transition">FPV</span>
+              <span className="cinematic hover-target text-lg md:text-xl font-semibold text-white hover:text-[#7a9aa8] cursor-pointer transition">Cinematic</span>
+              <span className="neo1 hover-target text-lg md:text-xl font-semibold text-white hover:text-[#7a9aa8] cursor-pointer transition">Indoor</span>
+              <span className="camera hover-target text-lg md:text-xl font-semibold text-white hover:text-[#7a9aa8] cursor-pointer transition">Camera Work</span>
+            </div>
           </div>
         </div>
-      </div>
 
       {/* FPV Section */}
       <div className="fpv-section">

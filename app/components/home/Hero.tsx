@@ -18,7 +18,7 @@ export default function Hero() {
             playsInline
             preload="auto"
           >
-            <source src="/videos/hero_compressed.mp4" type="video/mp4" />
+            <source src="/videos/water.mp4" type="video/mp4" />
           </video>
           {/* Mobile video - uses same for now, add mobile version later */}
           <video
@@ -29,24 +29,24 @@ export default function Hero() {
             playsInline
             preload="auto"
           >
-            <source src="/videos/hero_compressed.mp4" type="video/mp4" />
+            <source src="/videos/water.mp4" type="video/mp4" />
           </video>
         </div>
       </div>
 
       <div className="relative z-10 flex flex-col items-center justify-center text-center text-white px-6">
-        <h1 className={`flex flex-col items-center ${spaceGrotesk.className} font-bold text-[13vw] md:text-[8vw] leading-[0.9] tracking-tight`}>
-          <span className="uppercase" style={{letterSpacing: "0.05em"}}>HK</span>
+        <h1 className={`flex flex-col items-center ${spaceGrotesk.className} font-bold text-[13vw] md:text-[8vw] leading-[0.9] tracking-tight drop-shadow-lg`}>
+          <span className="uppercase" style={{letterSpacing: "0.05em", textShadow: '0 2px 8px #000'}}>HK</span>
           <span style={{height: '2vw', minHeight: 16, display: 'block'}}></span>
-          <span className="uppercase" style={{
+          <span className="uppercase text-primary" style={{
             letterSpacing: "0.05em",
             fontWeight: 700,
-            color: "#7a9aa8",
             fontSize: "0.9em",
-            marginTop: 0
+            marginTop: 0,
+            textShadow: '0 2px 8px #000'
           }}>IMAGING</span>
         </h1>
-        <p className="mx-auto mt-8 max-w-xl text-base md:text-lg text-white/80 font-medium">
+        <p className="mx-auto mt-8 max-w-xl text-base md:text-lg text-white/90 font-medium drop-shadow" style={{textShadow: '0 2px 8px #000'}}>
           Aerial cinematography for real estate, automotive, tourism, construction, events, and marine.
         </p>
       </div>
