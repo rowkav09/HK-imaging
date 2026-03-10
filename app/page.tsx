@@ -161,7 +161,7 @@ export default function Home() {
                 title: "Highland Trail",
                 tag: "Landscape",
                 location: "UK",
-                video: "/videos/mountain_walk.MP4",
+                video: "/videos/mountain_walk.mp4",
               },
               {
                 title: "Forest Path",
@@ -211,7 +211,7 @@ export default function Home() {
             ];
 
             const gallery = [
-              "/videos/mountain_walk.MP4",
+              "/videos/mountain_walk.mp4",
               "/videos/walk.MP4",
               "/videos/water.MP4",
               "/videos/yacht.mp4",

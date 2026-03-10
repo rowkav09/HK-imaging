@@ -18,7 +18,7 @@ export default function Hero() {
             playsInline
             preload="auto"
           >
-            <source src="/videos/mountain_walk.mp4" type="video/mp4" />
+            <source src="/videos/water.MP4" type="video/mp4" />
           </video>
           {/* Mobile video - uses same for now, add mobile version later */}
           <video
@@ -29,7 +29,7 @@ export default function Hero() {
             playsInline
             preload="auto"
           >
-            <source src="/videos/mountain_walk.mp4" type="video/mp4" />
+            <source src="/videos/water.MP4" type="video/mp4" />
           </video>
         </div>
       </div>

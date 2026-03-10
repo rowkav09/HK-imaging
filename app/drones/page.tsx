@@ -516,7 +516,7 @@ export default function PortfolioPage() {
                   }
                 }}
               >
-                <source src="/videos/mountain_walk.MP4" type="video/mp4" />
+                <source src="/videos/mountain_walk.mp4" type="video/mp4" />
               </video>
             </div>
             <div className="col-md-6 col-lg-4">
