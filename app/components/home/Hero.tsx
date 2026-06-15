@@ -1,54 +1,104 @@
 import { Space_Grotesk } from "next/font/google";
-// Use a blocky, modern font for the hero
-const spaceGrotesk = Space_Grotesk({ subsets: ["latin"], display: "swap", weight: ["700"] });
 
-// Hero section for homepage
-// Contains the video background, brand, and location info
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["700"],
+});
+
 export default function Hero() {
   return (
-    <header className="relative flex h-screen w-full items-center justify-center overflow-hidden bg-black">
+    <header className="relative flex h-screen w-full items-end justify-start overflow-hidden bg-black">
+      {/* ── Video background ─────────────────────────── */}
       <div className="absolute inset-0">
-        <div className="absolute inset-0 scale-[1.06]">
-          {/* Desktop video */}
-          <video
-            className="hidden md:block h-full w-full object-cover"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="auto"
+        <video
+          className="h-full w-full object-cover scale-[1.04]"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          poster="/cloudy.JPG"
+        >
+          <source src="/videos/hero_compressed.mp4" type="video/mp4" />
+        </video>
+        {/* Dark gradient overlay — heavy at bottom for text legibility */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              'linear-gradient(to bottom, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.1) 40%, rgba(0,0,0,0.55) 75%, rgba(0,0,0,0.85) 100%)',
+          }}
+        />
+      </div>
+
+      {/* ── Content ──────────────────────────────────── */}
+      <div className="relative z-10 w-full px-6 pb-14 md:px-12 lg:px-20 md:pb-20">
+        <div className="max-w-4xl">
+          {/* Kicker */}
+          <p
+            className="mb-5 font-mono text-[10px] uppercase tracking-[0.4em]"
+            style={{ color: '#c8a56a' }}
           >
-            <source src="/videos/water.mp4" type="video/mp4" />
-          </video>
-          {/* Mobile video - uses same for now, add mobile version later */}
-          <video
-            className="md:hidden h-full w-full object-cover"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="auto"
+            Aerial Cinematography · UK
+          </p>
+
+          {/* Headline */}
+          <h1
+            className={`${spaceGrotesk.className} font-bold leading-[0.9] tracking-tight text-white`}
+            style={{ fontSize: 'clamp(3.5rem, 10vw, 8rem)' }}
           >
-            <source src="/videos/water.mp4" type="video/mp4" />
-          </video>
+            <span className="block">HK</span>
+            <span className="block" style={{ color: '#c8a56a' }}>
+              IMAGING
+            </span>
+          </h1>
+
+          {/* Tagline */}
+          <p
+            className="mt-6 max-w-lg text-sm md:text-base font-medium leading-relaxed"
+            style={{ color: 'rgba(240, 236, 229, 0.75)' }}
+          >
+            Cinematic drone coverage for real estate, automotive, tourism,
+            construction, events, and marine.
+          </p>
+
+          {/* CTAs */}
+          <div className="mt-8 flex flex-wrap items-center gap-3">
+            <a href="#portfolio" className="btn-gold no-underline">
+              See Our Work
+            </a>
+            <a href="#contact" className="btn-ghost no-underline">
+              Book a Shoot →
+            </a>
+          </div>
         </div>
       </div>
 
-      <div className="relative z-10 flex flex-col items-center justify-center text-center text-white px-6">
-        <h1 className={`flex flex-col items-center ${spaceGrotesk.className} font-bold text-[13vw] md:text-[8vw] leading-[0.9] tracking-tight drop-shadow-lg`}>
-          <span className="uppercase" style={{letterSpacing: "0.05em", textShadow: '0 2px 8px #000'}}>HK</span>
-          <span style={{height: '2vw', minHeight: 16, display: 'block'}}></span>
-          <span className="uppercase text-primary" style={{
-            letterSpacing: "0.05em",
-            fontWeight: 700,
-            fontSize: "0.9em",
-            marginTop: 0,
-            textShadow: '0 2px 8px #000'
-          }}>IMAGING</span>
-        </h1>
-        <p className="mx-auto mt-8 max-w-xl text-base md:text-lg text-white/90 font-medium drop-shadow" style={{textShadow: '0 2px 8px #000'}}>
-          Aerial cinematography for real estate, automotive, tourism, construction, events, and marine.
-        </p>
+      {/* ── Scroll indicator ─────────────────────────── */}
+      <div className="absolute bottom-7 right-8 hidden md:flex flex-col items-center gap-2">
+        <span
+          className="font-mono text-[9px] uppercase tracking-[0.3em] rotate-90 origin-center"
+          style={{ color: 'rgba(200, 165, 106, 0.6)' }}
+        >
+          Scroll
+        </span>
+        <div className="w-px h-10 overflow-hidden" style={{ background: 'rgba(255,255,255,0.1)' }}>
+          <div
+            className="w-full"
+            style={{
+              height: '40%',
+              background: '#c8a56a',
+              animation: 'scrollDot 2s ease-in-out infinite',
+            }}
+          />
+        </div>
+        <style>{`
+          @keyframes scrollDot {
+            0%   { transform: translateY(-100%); }
+            100% { transform: translateY(250%); }
+          }
+        `}</style>
       </div>
     </header>
   );

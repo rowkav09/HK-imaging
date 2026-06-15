@@ -1,29 +1,41 @@
 import type { Metadata } from "next";
-import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next";
 import { Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"], display: "swap", variable: "--font-inter" });
-const spaceGrotesk = Space_Grotesk({ subsets: ["latin"], display: "swap", variable: "--font-space-grotesk" });
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-inter",
+});
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-space-grotesk",
+});
 
 export const metadata: Metadata = {
-  title: "HK imaging | Professional Drone Cinematography",
-  description: "HK imaging - Professional drone cinematography services. Capturing stunning perspectives with cinematic quality and natural artistry.",
+  title: "HK Imaging | Aerial Cinematography",
+  description:
+    "Professional drone cinematography for real estate, automotive, tourism, construction, events, and marine. Based in the UK.",
+  openGraph: {
+    title: "HK Imaging | Aerial Cinematography",
+    description:
+      "Professional drone cinematography for real estate, automotive, tourism, construction, events, and marine.",
+    type: "website",
+  },
 };
 
-// RootLayout: wraps all pages, sets up global fonts and analytics
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className={`antialiased bg-bg text-primary ${inter.variable} ${spaceGrotesk.variable}`}>
-        {/* Main app content */}
+      <body
+        className={`antialiased bg-bg text-ink ${inter.variable} ${spaceGrotesk.variable}`}
+      >
         {children}
-        {/* Vercel Analytics */}
         <Analytics />
       </body>
     </html>

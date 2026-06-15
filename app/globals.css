@@ -1,312 +1,178 @@
 @import "tailwindcss";
 
+/* Font references — next/font injects --font-inter and --font-space-grotesk on the body */
 @theme inline {
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-  --color-destructive-foreground: var(--destructive-foreground);
+  --font-display: var(--font-space-grotesk), "Space Grotesk", system-ui, sans-serif;
+  --font-sans:    var(--font-inter), system-ui, -apple-system, sans-serif;
 }
 
+/* Natural forest dark palette — Tailwind utilities + :root CSS vars */
+@theme {
+  --color-bg:      #0d1410;
+  --color-surface: #141d17;
+  --color-card:    #1b2620;
+  --color-ink:     #f0ead6;
+  --color-muted:   #6d8871;
+  --color-faint:   #2e3c31;
+  --color-gold:    #c9a45f;
+  --color-teal:    #5a9470;
+}
+
+/* Extra tokens for manual use */
 :root {
-  --color-bg: #23422a;
-  --color-surface: #232825;
-  --color-primary: #7bbfae;
-  --color-accent: #eab676;
-  --color-text: #f5f5f4;
-  --color-text-muted: #bfc9c2;
-  --color-border: #2d3732;
-  --color-success: #8ec07c;
-  --color-warning: #eab676;
-  --color-error: #e57373;
-  --color-info: #7bbfae;
-  --font-geist-sans: "Geist Sans", sans-serif;
-  --font-geist-mono: "Geist Mono", monospace;
+  --gold-hover:  #d9b875;
+  --gold-dim:    rgba(201, 164, 95, 0.10);
+  --border:      rgba(100, 155, 110, 0.11);
+  --border-gold: rgba(201, 164, 95, 0.38);
 }
 
-.dark {
-  --background: oklch(0 0 0);
-  --foreground: oklch(1 0 0);
-  --card: oklch(0.1 0 0 / 0.1);
-  --card-foreground: oklch(1 0 0);
-  --popover: oklch(0 0 0 / 0.8);
-  --popover-foreground: oklch(1 0 0);
-  --primary: oklch(1 0 0);
-  --primary-foreground: oklch(0 0 0);
-  --secondary: oklch(0.65 0.25 25);
-  --secondary-foreground: oklch(1 0 0);
-  --muted: oklch(1 0 0 / 0.5);
-  --muted-foreground: oklch(0.7 0 0);
-  --accent: oklch(0.65 0.25 25);
-  --accent-foreground: oklch(1 0 0);
-  --destructive: oklch(0.6 0.25 15);
-  --destructive-foreground: oklch(1 0 0);
-  --border: oklch(1 0 0 / 0.2);
-  --input: oklch(1 0 0 / 0.1);
-  --ring: oklch(1 0 0 / 0.3);
-  --chart-1: oklch(0.65 0.25 25);
-  --chart-2: oklch(0.8 0.15 85);
-  --chart-3: oklch(0.7 0.2 140);
-  --chart-4: oklch(0.7 0.2 240);
-  --chart-5: oklch(0.6 0.25 300);
-  --sidebar: oklch(0 0 0 / 0.9);
-  --sidebar-foreground: oklch(1 0 0);
-  --sidebar-primary: oklch(0.65 0.25 25);
-  --sidebar-primary-foreground: oklch(1 0 0);
-  --sidebar-accent: oklch(0.65 0.25 25);
-  --sidebar-accent-foreground: oklch(1 0 0);
-  --sidebar-border: oklch(1 0 0 / 0.2);
-  --sidebar-ring: oklch(1 0 0 / 0.3);
-}
+/* ── Base ───────────────────────────────────────────── */
+*,
+*::before,
+*::after { box-sizing: border-box; }
 
-:root {
-  --bg: #f4f2ef;
-  --bg-warm: #e8eef3;
-  --card: #ffffff;
-  --primary: #3d5a66;
-  --secondary: #5a6d78;
-  --border: rgba(90, 109, 120, 0.15);
-  --accent: #7a9aa8;
-  --accent-dark: #3d5a66;
+html {
+  scroll-behavior: smooth;
+  scrollbar-width: none;
 }
+html::-webkit-scrollbar { display: none; }
 
 body {
-  background: var(--bg);
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans), system-ui, sans-serif;
   min-height: 100vh;
-  color: var(--primary);
-  font-family: var(--font-inter), system-ui, -apple-system, "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -ms-overflow-style: none;
+}
+
+::selection {
+  background: var(--color-gold);
+  color: #0d1410;
 }
 
 a, a:hover, a:focus, a:active, a:visited {
   text-decoration: none !important;
 }
 
-.bg-bg {
-  background-color: var(--bg);
-}
+/* ── Utilities ──────────────────────────────────────── */
+.no-scrollbar               { scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
 
-.bg-warm {
-  background-color: var(--bg-warm);
-}
-
-.bg-card {
-  background-color: var(--card);
-}
-
-.text-primary {
-  color: var(--primary);
-}
-
-.text-secondary {
-  color: var(--secondary);
-}
-
-.border-border {
-  border-color: var(--border);
-}
-
-.font-display {
-  font-family: var(--font-space-grotesk), "Space Grotesk", system-ui, sans-serif;
-}
-
-html {
-  scroll-behavior: smooth;
-  scrollbar-width: none;
-}
-
-html::-webkit-scrollbar {
-  display: none;
-}
-
-body {
-  -ms-overflow-style: none;
-}
-
-::selection {
-  background: #5a6d78;
-  color: #ffffff;
-}
-
-/* Subtle grain overlay */
-.noise::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-  opacity: 0.04;
-  z-index: 5;
-}
-
-/* Simple motion helpers */
-@keyframes fade-up {
-  from {
-    opacity: 0;
-    transform: translateY(24px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.fade-up {
-  animation: fade-up 0.8s ease forwards;
-}
-
-.text-stroke {
-  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.5);
-}
-
-.no-scrollbar {
-  scrollbar-width: none;
-}
-
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-
-.text-glow {
-  filter: drop-shadow(0 0 22px rgba(0, 0, 0, 0.45)) drop-shadow(0 12px 28px rgba(0, 0, 0, 0.35));
-}
-
-.text-glow-soft {
-  filter: drop-shadow(0 0 14px rgba(0, 0, 0, 0.35));
-}
-
+/* ── Reveal on scroll ───────────────────────────────── */
 .reveal {
   opacity: 0;
-  transform: translateY(32px);
-  transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
+  transform: translateY(28px);
+  transition: opacity 0.75s ease, transform 0.75s ease;
 }
-
 .reveal-visible {
   opacity: 1;
   transform: translateY(0);
 }
 
-.btn-ghost {
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  color: var(--primary);
-  background: linear-gradient(120deg, rgba(17, 17, 17, 0.06), rgba(17, 17, 17, 0.02));
-  padding: 0.7rem 1.4rem;
-  font-size: 0.75rem;
-  letter-spacing: 0.2em;
+/* ── Marquee ────────────────────────────────────────── */
+@keyframes drift {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.animate-marquee { animation: drift 34s linear infinite; }
+
+/* ── Fade-up ────────────────────────────────────────── */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.fade-up { animation: fade-up 0.8s ease forwards; }
+
+/* ── Video card ─────────────────────────────────────── */
+.vid-card {
+  transition: box-shadow 0.35s ease;
+}
+.vid-card:hover {
+  box-shadow: 0 0 0 1px var(--border-gold), 0 32px 64px rgba(0, 0, 0, 0.55);
+}
+
+/* ── Gold button ────────────────────────────────────── */
+.btn-gold {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--color-gold);
+  color: #0d1410;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   border-radius: 999px;
-  transition: all 0.28s var(--ease-out);
+  padding: 0.65rem 1.5rem;
+  transition: background 0.25s ease, box-shadow 0.25s ease;
+  cursor: pointer;
+  border: none;
+}
+.btn-gold:hover {
+  background: var(--gold-hover);
+  box-shadow: 0 8px 28px rgba(201, 164, 95, 0.32);
 }
 
+/* ── Ghost button ───────────────────────────────────── */
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: transparent;
+  color: var(--color-ink);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  padding: 0.65rem 1.5rem;
+  border: 1px solid rgba(240, 234, 214, 0.18);
+  transition: border-color 0.25s ease, color 0.25s ease;
+  cursor: pointer;
+}
 .btn-ghost:hover {
-  border-color: #2f7d5c;
-  color: var(--primary);
-  box-shadow: 0 15px 45px rgba(47, 125, 92, 0.18);
-  transform: translateY(-2px);
+  border-color: var(--color-gold);
+  color: var(--color-gold);
 }
 
-.portfolio-case {
-  position: relative;
-  overflow: hidden;
-  transform-style: preserve-3d;
+/* ── Equipment card ─────────────────────────────────── */
+.equip-card {
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  background: var(--color-card);
+  padding: 1.5rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.equip-card:hover {
+  border-color: var(--border-gold);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.4);
 }
 
-.portfolio-case .reveal-inner {
-  animation: slideUp 0.8s var(--ease-out) forwards;
+/* ── Loader spinner (portfolio pages) ───────────────── */
+@keyframes spin { to { transform: rotate(360deg); } }
+.hk-loader {
+  position: fixed;
+  inset: 0;
+  background: var(--color-bg);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  transition: opacity 0.35s ease, visibility 0.35s ease;
 }
-
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes slideUpStaggered {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeInStaggered {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-.animate-slide-up {
-  animation: slideUpStaggered 0.6s var(--ease-out) forwards;
-}
-
-.animate-fade-in {
-  animation: fadeInStaggered 0.6s var(--ease-out) forwards;
+.hk-loader.loaded {
   opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
 }
-
-.portfolio-case:hover {
-  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.35);
-}
-
-.portfolio-case button {
-  position: relative;
-  z-index: 10;
-}
-
-.portfolio-case button:hover span:last-child {
-  animation: arrow-bounce 0.6s ease infinite;
-}
-
-@keyframes arrow-bounce {
-  0%, 100% {
-    transform: translateX(0);
-  }
-  50% {
-    transform: translateX(6px);
-  }
-}
-
-@keyframes drift {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
-}
-
-.animate-marquee {
-  animation: drift 30s linear infinite;
-}
-
-/* Custom scrollbar for carousels */
-.custom-scrollbar {
-  scrollbar-width: thin;
-  scrollbar-color: rgba(98, 180, 135, 0.5) rgba(15, 26, 20, 0.3);
-}
-
-.custom-scrollbar::-webkit-scrollbar {
-  height: 6px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-track {
-  background: rgba(15, 26, 20, 0.3);
-  border-radius: 3px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(98, 180, 135, 0.5);
-  border-radius: 3px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgba(98, 180, 135, 0.7);
+.hk-spinner {
+  width: 28px;
+  height: 28px;
+  border: 1.5px solid rgba(201, 164, 95, 0.18);
+  border-top-color: rgba(201, 164, 95, 0.8);
+  border-radius: 50%;
+  animation: spin 0.75s linear infinite;
 }

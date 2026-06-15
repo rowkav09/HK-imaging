@@ -1,724 +1,328 @@
 'use client';
 
-import { useEffect, useState } from "react";
-import Link from "next/link";
-import Script from "next/script";
+import { useEffect, useState } from 'react';
 import Header from '../components/Header';
 
-import { MeshGradient } from "@paper-design/shaders-react";
-
 export default function PortfolioPage() {
-  const [isLoading, setIsLoading] = useState(true);
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    // Hide loader after brief delay
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 400);
-
-    return () => clearTimeout(timer);
+    const t = setTimeout(() => setLoaded(true), 300);
+    return () => clearTimeout(t);
   }, []);
 
   useEffect(() => {
-    // Section handlers
-    const setupSectionHandlers = () => {
-      const fpvBtn = document.querySelector(".fpv");
-      const cinematicBtn = document.querySelector(".cinematic");
-      const neo1Btn = document.querySelector(".neo1");
-      const cameraBtn = document.querySelector(".camera");
+    const open  = (cls: string) => () => document.body.classList.add(cls);
+    const close = (cls: string) => () => document.body.classList.remove(cls);
 
-      const fpvClose = document.querySelector(".fpv-close");
-      const cinematicClose = document.querySelector(".cinematic-close");
-      const neo1Close = document.querySelector(".neo1-close");
-      const cameraClose = document.querySelector(".camera-close");
+    const pairs: [string, string][] = [
+      ['.fpv',      'fpv-on'],
+      ['.cinematic','cinematic-on'],
+      ['.neo1',     'neo1-on'],
+      ['.camera',   'camera-on'],
+    ];
 
-      fpvBtn?.addEventListener("click", () => document.body.classList.add("fpv-on"));
-      fpvClose?.addEventListener("click", () => document.body.classList.remove("fpv-on"));
+    const cleanup: (() => void)[] = [];
 
-      cinematicBtn?.addEventListener("click", () => document.body.classList.add("cinematic-on"));
-      cinematicClose?.addEventListener("click", () => document.body.classList.remove("cinematic-on"));
-
-      neo1Btn?.addEventListener("click", () => document.body.classList.add("neo1-on"));
-      neo1Close?.addEventListener("click", () => document.body.classList.remove("neo1-on"));
-
-      cameraBtn?.addEventListener("click", () => document.body.classList.add("camera-on"));
-      cameraClose?.addEventListener("click", () => document.body.classList.remove("camera-on"));
-    };
-
-    setupSectionHandlers();
-
-    // Hide header on scroll in overlay sections
-    const handleSectionScroll = () => {
-      const scrollContainers = document.querySelectorAll('.section-content');
-      scrollContainers.forEach((container) => {
-        container.addEventListener('scroll', () => {
-          const scrolled = (container as HTMLElement).scrollTop > 50;
-          const header = document.querySelector('nav');
-          if (header && (document.body.classList.contains('fpv-on') || 
-                        document.body.classList.contains('cinematic-on') || 
-                        document.body.classList.contains('neo1-on') || 
-                        document.body.classList.contains('camera-on'))) {
-            if (scrolled) {
-              header.style.opacity = '0';
-              header.style.transform = 'translateY(-100%)';
-            } else {
-              header.style.opacity = '1';
-              header.style.transform = 'translateY(0)';
-            }
-          }
-        });
-      });
-    };
-
-    handleSectionScroll();
+    pairs.forEach(([sel, cls]) => {
+      const btn      = document.querySelector(sel);
+      const closeBtn = document.querySelector(`.${cls.replace('-on', '-close')}`);
+      const openFn   = open(cls);
+      const closeFn  = close(cls);
+      btn?.addEventListener('click', openFn);
+      closeBtn?.addEventListener('click', closeFn);
+      cleanup.push(
+        () => btn?.removeEventListener('click', openFn),
+        () => closeBtn?.removeEventListener('click', closeFn),
+      );
+    });
 
     return () => {
-      document.body.className = "";
+      cleanup.forEach((fn) => fn());
+      document.body.className = '';
     };
   }, []);
+
+  const VIDEO_CLASSES =
+    'mt-5 w-full h-auto block rounded-lg shadow-xl cursor-pointer';
 
   return (
     <>
-      {/* Loading Overlay */}
-      <div className={`page-loader ${!isLoading ? 'loaded' : ''}`}>
-        <div className="loader-spinner"></div>
+      {/* Loader */}
+      <div className={`hk-loader ${loaded ? 'loaded' : ''}`}>
+        <div className="hk-spinner" />
       </div>
 
       <Header />
+
       <style jsx global>{`
-        body, .portfolio-bg {
-          background: #10151a !important;
-        }
-        .page-loader {
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background: 
-            radial-gradient(ellipse at 20% 0%, rgba(90, 109, 120, 0.15) 0%, transparent 50%),
-            radial-gradient(ellipse at 80% 100%, rgba(61, 90, 102, 0.12) 0%, transparent 50%),
-            linear-gradient(160deg, #dce4ea 0%, #e8eef3 30%, #f4f2ef 60%, #e8eef3 100%);
-          z-index: 9999;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          opacity: 1;
-          transition: opacity 0.3s ease-out, visibility 0.3s ease-out;
-        }
-
-        .page-loader.loaded {
-          opacity: 0;
-          visibility: hidden;
-          pointer-events: none;
-        }
-
-        .loader-spinner {
-          width: 32px;
-          height: 32px;
-          border: 2px solid rgba(90, 109, 120, 0.2);
-          border-top-color: rgba(90, 109, 120, 0.8);
-          border-radius: 50%;
-          animation: spin 0.8s linear infinite;
-        }
-
-        @keyframes spin {
-          to { transform: rotate(360deg); }
-        }
-        @import url('https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i');
-
+        /* ── Body states ─────────────────────────────── */
         body {
-          font-family: 'Poppins', sans-serif;
-          font-weight: 300;
-          font-size: 15px;
-          line-height: 1.6;
-          color: #3d5a66;
-          height: 100vh;
-          margin: 0;
-          background: 
-            radial-gradient(ellipse at 20% 0%, rgba(90, 109, 120, 0.15) 0%, transparent 50%),
-            radial-gradient(ellipse at 80% 100%, rgba(61, 90, 102, 0.12) 0%, transparent 50%),
-            linear-gradient(160deg, #dce4ea 0%, #e8eef3 30%, #f4f2ef 60%, #e8eef3 100%);
-          background-attachment: fixed;
+          background: #0d1410;
           overflow: hidden;
-          transition: background 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-          perspective: 1000px;
+          height: 100vh;
         }
-
-        body.fpv-on {
-          background: 
-            radial-gradient(ellipse at 30% 20%, rgba(122, 154, 168, 0.4) 0%, transparent 50%),
-            radial-gradient(ellipse at 70% 80%, rgba(61, 90, 102, 0.3) 0%, transparent 50%),
-            linear-gradient(135deg, #4a5d68 0%, #3d5a66 50%, #2d4a56 100%);
-          background-attachment: fixed;
-        }
-
-        body.cinematic-on {
-          background: 
-            radial-gradient(ellipse at 20% 30%, rgba(122, 154, 168, 0.35) 0%, transparent 50%),
-            radial-gradient(ellipse at 80% 70%, rgba(61, 90, 102, 0.25) 0%, transparent 50%),
-            linear-gradient(145deg, #3d5a66 0%, #2d4a56 50%, #1d3a46 100%);
-          background-attachment: fixed;
-        }
-
-        body.neo1-on {
-          background: 
-            radial-gradient(ellipse at 40% 10%, rgba(122, 154, 168, 0.35) 0%, transparent 50%),
-            radial-gradient(ellipse at 60% 90%, rgba(61, 90, 102, 0.25) 0%, transparent 50%),
-            linear-gradient(155deg, #5a6d78 0%, #3d5a66 50%, #2d4a56 100%);
-          background-attachment: fixed;
-        }
-
+        body.fpv-on,
+        body.cinematic-on,
+        body.neo1-on,
         body.camera-on {
-          background: 
-            radial-gradient(ellipse at 25% 25%, rgba(122, 154, 168, 0.35) 0%, transparent 50%),
-            radial-gradient(ellipse at 75% 75%, rgba(61, 90, 102, 0.25) 0%, transparent 50%),
-            linear-gradient(140deg, #4a5d68 0%, #3d5a66 50%, #2d4a56 100%);
-          background-attachment: fixed;
+          background: #101a14;
         }
 
-
-        .hero-section {
+        /* ── Hero shrink when a panel is open ────────── */
+        .pf-hero {
           position: relative;
           width: 100%;
-          display: block;
-          overflow: hidden;
           height: 100vh;
-          background: transparent;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
           transform: scale(1) rotateX(0) translateZ(0);
-          box-shadow: 0 0 40px rgba(0,0,0,0.05);
-          transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease-out;
           transform-origin: center center;
+          transition: transform 0.65s cubic-bezier(0.4,0,0.2,1),
+                      opacity  0.45s ease;
+          overflow: hidden;
         }
-
-        body.fpv-on .hero-section,
-        body.cinematic-on .hero-section,
-        body.neo1-on .hero-section,
-        body.camera-on .hero-section {
+        body.fpv-on      .pf-hero,
+        body.cinematic-on .pf-hero,
+        body.neo1-on     .pf-hero,
+        body.camera-on   .pf-hero {
           transform: scale(0.92) rotateX(8deg) translateZ(-100px);
           opacity: 0;
           pointer-events: none;
         }
 
-        .hero-section h1 {
-          color: #3d5a66;
-          font-size: 8vw;
-          line-height: 1;
-          font-weight: 900;
-        }
-
-        .hero-section .dancing {
-          letter-spacing: 1px;
-          color: #5a6d78;
-          font-size: 25px;
-          line-height: 1;
-          font-weight: 700;
-          letter-spacing: 3px;
-          text-transform: uppercase;
-          transform: translateY(-175px) rotate(-45deg);
-          z-index: 2;
-        }
-
-        .hero-section .dancing span {
-          padding: 8px 15px;
-          padding-right: 10px;
-          display: inline-block;
-          border-radius: 5px;
-          background-color: #5a6d78;
-          color: #fff;
-        }
-
-        .hero-section p {
-          font-size: 20px;
-          line-height: 1;
-          font-weight: 700;
-          color: #5a6d78;
-        }
-
-        .fpv-section p,
-        .cinematic-section p,
-        .neo1-section p,
-        .camera-section p {
-          color: #e9f7ef;
-        }
-
-        .hero-section p span {
-          margin-left: 15px;
-          margin-right: 15px;
-          position: relative;
-          display: inline-block;
-          cursor: pointer;
-        }
-
-        .fpv-section,
-        .cinematic-section,
-        .neo1-section,
-        .camera-section {
+        /* ── Slide-up panels ─────────────────────────── */
+        .pf-panel {
           position: fixed;
           top: 100%;
           left: 0;
           width: 100%;
           height: 100vh;
-          display: block;
           overflow: hidden;
-          background-color: transparent;
+          background: transparent;
           backdrop-filter: blur(0px);
-          transition: 
-            top 0.6s cubic-bezier(0.4, 0, 0.2, 1),
-            opacity 0.4s ease-out,
-            backdrop-filter 0.5s ease-out;
+          transition: top 0.55s cubic-bezier(0.4,0,0.2,1),
+                      opacity 0.4s ease,
+                      backdrop-filter 0.5s ease;
           z-index: 10;
           opacity: 0;
         }
-
-        body.fpv-on .fpv-section,
-        body.cinematic-on .cinematic-section,
-        body.neo1-on .neo1-section,
-        body.camera-on .camera-section {
+        body.fpv-on       .fpv-panel,
+        body.cinematic-on .cinematic-panel,
+        body.neo1-on      .neo1-panel,
+        body.camera-on    .camera-panel {
           top: 0;
           opacity: 1;
-          backdrop-filter: blur(8px);
+          backdrop-filter: blur(6px);
         }
 
-        .section-content {
+        /* ── Scrollable panel content ────────────────── */
+        .pf-scroll {
           position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          padding: 100px 0;
-          overflow-x: hidden;
+          inset: 0;
+          padding: 100px 24px 40px;
           overflow-y: auto;
+          overflow-x: hidden;
           scrollbar-width: none;
         }
+        .pf-scroll::-webkit-scrollbar { display: none; }
 
-        .section-content::-webkit-scrollbar {
-          width: 0;
-          height: 0;
-        }
-
+        /* ── Close buttons ───────────────────────────── */
         .fpv-close,
         .cinematic-close,
         .neo1-close,
         .camera-close {
           position: fixed;
-          top: 96px;
+          top: 88px;
           right: 20px;
-          width: 30px;
-          display: block;
-          overflow: hidden;
-          height: 30px;
-          transition: all 200ms linear;
-          background-repeat: no-repeat;
-          background-position: center;
-          background-size: 36px 36px;
-          background-image: url('http://www.ivang-design.com/svg-load/portfolio/close.svg');
+          width: 36px;
+          height: 36px;
+          border-radius: 50%;
+          border: 1px solid rgba(201,164,95,0.3);
+          background: rgba(13,20,16,0.7);
           cursor: pointer;
           z-index: 11;
           opacity: 0;
           visibility: hidden;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.2s ease;
+        }
+        .fpv-close::before, .fpv-close::after,
+        .cinematic-close::before, .cinematic-close::after,
+        .neo1-close::before, .neo1-close::after,
+        .camera-close::before, .camera-close::after {
+          content: '';
+          position: absolute;
+          width: 14px;
+          height: 1px;
+          background: #c9a45f;
+        }
+        .fpv-close::before, .cinematic-close::before,
+        .neo1-close::before, .camera-close::before { transform: rotate(45deg); }
+        .fpv-close::after,  .cinematic-close::after,
+        .neo1-close::after,  .camera-close::after  { transform: rotate(-45deg); }
+        .fpv-close:hover, .cinematic-close:hover,
+        .neo1-close:hover, .camera-close:hover {
+          background: rgba(201,164,95,0.15);
+          border-color: rgba(201,164,95,0.6);
         }
 
-        .fpv-close:hover,
-        .cinematic-close:hover,
-        .neo1-close:hover,
-        .camera-close:hover {
-          transform: rotate(90deg);
-        }
-
-        body.fpv-on .fpv-close,
+        body.fpv-on      .fpv-close,
         body.cinematic-on .cinematic-close,
-        body.neo1-on .neo1-close,
-        body.camera-on .camera-close {
+        body.neo1-on     .neo1-close,
+        body.camera-on   .camera-close {
           opacity: 1;
           visibility: visible;
         }
 
-        .fpv-section img,
-        .cinematic-section img,
-        .neo1-section img,
-        .camera-section img,
-        .fpv-section video,
-        .cinematic-section video,
-        .neo1-section video,
-        .camera-section video {
-          margin-top: 30px;
+        /* ── Panel typography ────────────────────────── */
+        .pf-panel h3 {
+          font-size: clamp(2.5rem, 8vw, 6rem);
+          font-weight: 700;
+          color: #f0ead6;
+          letter-spacing: -0.02em;
+          line-height: 1;
+        }
+        .pf-panel p { color: #6d8871; font-size: 0.9rem; line-height: 1.7; }
+        .pf-panel p span { color: #f0ead6; font-weight: 600; font-size: 1rem; }
+        .pf-panel video, .pf-panel img {
           width: 100%;
           height: auto;
           display: block;
-          border-radius: 4px;
-          box-shadow: 0 0 20px rgba(0,0,0,0.4);
-          background: transparent;
+          border-radius: 0.75rem;
+          margin-top: 1.25rem;
+          box-shadow: 0 20px 48px rgba(0,0,0,0.5);
         }
 
-        .fpv-section h3,
-        .cinematic-section h3,
-        .neo1-section h3,
-        .camera-section h3 {
-          font-size: 7vw;
-          line-height: 1;
-          font-weight: 700;
-          letter-spacing: 1px;
-          color: #fff;
-        }
-
-        .fpv-section p,
-        .cinematic-section p,
-        .neo1-section p,
-        .camera-section p {
-          font-size: 14px;
-          line-height: 1.7;
-          letter-spacing: 1px;
-          font-weight: 500;
-          color: #fff;
-        }
-
-        .fpv-section p span,
-        .cinematic-section p span,
-        .neo1-section p span,
-        .camera-section p span {
-          font-size: 20px;
-          line-height: 1.3;
-          font-weight: 700;
-          color: #e8eef3;
-        }
-
-        .section-center {
-          position: absolute;
-          width: 100%;
-          left: 0;
-          top: 50%;
-          transform: translateY(-50%);
-          z-index: 1;
-        }
-
-        .back-home {
-          position: fixed;
-          top: 30px;
-          left: 30px;
-          z-index: 200000;
-          color: #5a6d78;
-          font-size: 14px;
-          font-weight: 600;
-          text-decoration: none;
-          transition: all 250ms linear;
-        }
-
-        .back-home:hover {
-          color: #3d5a66;
-        }
-
-        /* Mobile responsiveness */
+        /* ── Mobile ──────────────────────────────────── */
         @media (max-width: 768px) {
-          .hero-section h1 {
-            font-size: 12vw;
-          }
-
-          .hero-section .dancing {
-            font-size: 16px;
-            transform: translateY(-120px) rotate(-45deg);
-          }
-
-          .hero-section p {
-            font-size: 16px;
-          }
-
-          .hero-section p span {
-            margin-left: 8px;
-            margin-right: 8px;
-            display: block;
-            margin-bottom: 12px;
-          }
-
-          .fpv-section h3,
-          .cinematic-section h3,
-          .neo1-section h3,
-          .camera-section h3 {
-            font-size: 10vw;
-          }
-
-          .fpv-close,
-          .cinematic-close,
-          .neo1-close,
-          .camera-close {
-            top: 70px;
-            right: 15px;
-            width: 40px;
-            height: 40px;
-            background-size: 28px 28px;
-          }
-
-          .section-content {
-            padding: 80px 0;
-          }
-
-          .fpv-section img,
-          .cinematic-section img,
-          .neo1-section img,
-          .camera-section img,
-          .fpv-section video,
-          .cinematic-section video,
-          .neo1-section video,
-          .camera-section video {
-            margin-top: 20px;
-          }
-        }
-
-        @media screen and (max-width: 1200px) {
-          .cursor, .cursor2 {
-            display: none;
-          }
-        }
-
-        @media (max-width: 967px) {
-          .hero-section h1 {
-            font-size: 11vw;
-          }
-          .hero-section p {
-            font-size: 18px;
-          }
-          .hero-section p span {
-            margin-left: 10px;
-            margin-right: 10px;
-          }
+          .pf-scroll { padding-top: 80px; }
         }
       `}</style>
 
-      {/* Truly dark themed hero section for portfolio */}
-        <div className="portfolio-bg hero-section bg-[#10151a] py-24 md:py-32 border-b border-[#232b32] relative overflow-hidden">
-          {/* Animated background using MeshGradient */}
-          <MeshGradient
-            className="absolute inset-0 w-full h-full z-0"
-            colors={["#181c1b", "#232825", "#7bbfae", "#eab676"]}
-            speed={1.0}
-          />
-          <div className="flex flex-col items-center justify-center text-center relative z-10">
-            <h1 className="font-extrabold text-white text-6xl md:text-8xl tracking-tight mb-4" style={{letterSpacing: '0.04em'}}>
-              HK
-            </h1>
-            <h2 className="font-extrabold text-[#7a9aa8] text-5xl md:text-7xl tracking-tight mb-6" style={{letterSpacing: '0.04em'}}>
-              IMAGING
-            </h2>
-            <div className="flex flex-wrap gap-6 justify-center mt-4">
-              <span className="fpv hover-target text-lg md:text-xl font-semibold text-white hover:text-[#7a9aa8] cursor-pointer transition">FPV</span>
-              <span className="cinematic hover-target text-lg md:text-xl font-semibold text-white hover:text-[#7a9aa8] cursor-pointer transition">Cinematic</span>
-              <span className="neo1 hover-target text-lg md:text-xl font-semibold text-white hover:text-[#7a9aa8] cursor-pointer transition">Indoor</span>
-              <span className="camera hover-target text-lg md:text-xl font-semibold text-white hover:text-[#7a9aa8] cursor-pointer transition">Camera Work</span>
-            </div>
+      {/* ── Hero ─────────────────────────────────────── */}
+      <div className="pf-hero">
+        {/* Subtle gradient bg */}
+        <div className="absolute inset-0 -z-10"
+          style={{ background: 'radial-gradient(ellipse at 50% 40%, rgba(90,148,112,0.12) 0%, transparent 65%)' }} />
+
+        <p className="font-mono text-[10px] uppercase tracking-[0.4em] text-gold mb-6">
+          Portfolio
+        </p>
+        <h1 className="font-display font-bold text-center text-ink"
+          style={{ fontSize: 'clamp(3rem, 10vw, 7rem)', lineHeight: 1, letterSpacing: '-0.02em' }}>
+          HK<br />
+          <span style={{ color: '#c9a45f' }}>IMAGING</span>
+        </h1>
+
+        <p className="mt-8 font-mono text-xs uppercase tracking-widest text-muted mb-2">
+          Select a category
+        </p>
+        <div className="flex flex-wrap gap-4 justify-center mt-3 px-6">
+          {[
+            { cls: 'fpv',      label: 'FPV' },
+            { cls: 'cinematic',label: 'Cinematic' },
+            { cls: 'neo1',     label: 'Indoor' },
+            { cls: 'camera',   label: 'Camera Work' },
+          ].map(({ cls, label }) => (
+            <span
+              key={cls}
+              className={`${cls} cursor-pointer font-display font-semibold text-lg md:text-2xl text-ink/25 hover:text-gold transition-colors duration-200 select-none`}
+            >
+              {label}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      {/* ── FPV Panel ────────────────────────────────── */}
+      <div className="fpv-panel pf-panel">
+        <div className="fpv-close" />
+        <div className="pf-scroll">
+          <div className="max-w-4xl mx-auto text-center">
+            <h3>FPV</h3>
+            <p className="mt-4"><span>DJI O4 Air Unit Pro</span></p>
+            <p className="mt-2">Camera: O4 FPV (1/1.3″ CMOS) · Use: Automotive · Action · Architecture</p>
+            <p className="mt-8 text-muted/60 text-sm italic">Footage coming soon.</p>
           </div>
         </div>
+      </div>
 
-      {/* FPV Section */}
-      <div className="fpv-section">
-        <div className="fpv-close hover-target"></div>
-        <div className="section-content">
-          <div className="container">
-          <div className="row justify-content-center">
-            <div className="col-12 text-center">
-              <h3>FPV</h3>
-            </div>
-            <div className="col-12 mt-3 text-center">
-              <p><span>DJI O4 Air Unit Pro</span></p>
-            </div>
-            <div className="col-12 text-center">
-              <p>
-                Camera: O4 FPV Camera (1/1.3″ CMOS)<br />
-                Use: Automotive • Action • Architecture
-              </p>
-            </div>
-            <div className="col-12 text-center mt-4">
-              <p>There’s nothing here yet.</p>
-            </div>
-          </div>
-        </div>        </div>      </div>
-
-      {/* Cinematic Section */}
-      <div className="cinematic-section">
-        <div className="cinematic-close hover-target"></div>
-        <div className="section-content">
-          <div className="container">
-          <div className="row justify-content-center">
-            <div className="col-12 text-center">
+      {/* ── Cinematic Panel ──────────────────────────── */}
+      <div className="cinematic-panel pf-panel">
+        <div className="cinematic-close" />
+        <div className="pf-scroll">
+          <div className="max-w-5xl mx-auto">
+            <div className="text-center mb-10">
               <h3>Cinematic</h3>
+              <p className="mt-3"><span>DJI Mavic 2 Pro · DJI Mini 2 Pro</span></p>
+              <p className="mt-1">Hasselblad L1D-20c &amp; 1/1.3″ CMOS · Real Estate · Tourism · Marine</p>
             </div>
-            <div className="col-12 mt-3 text-center">
-              <p><span>DJI Mavic 2 Pro & DJI Mini 2 Pro</span></p>
-            </div>
-            <div className="col-12 text-center">
-              <p>
-                Cameras: Hasselblad L1D-20c & 1/1.3″ CMOS<br />
-                Use: Real Estate • Automotive • Tourism • Marine
-              </p>
-            </div>
-            <div className="col-md-6 col-lg-4">
-              <video
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="metadata"
-                controls
-                onClick={(event) => {
-                  const video = event.currentTarget;
-                  if (video.requestFullscreen) {
-                    video.requestFullscreen();
-                  }
-                }}
-              >
-                <source src="/videos/mountain_walk.MP4" type="video/mp4" />
-              </video>
-            </div>
-            <div className="col-md-6 col-lg-4">
-              <video
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="metadata"
-                controls
-                onClick={(event) => {
-                  const video = event.currentTarget;
-                  if (video.requestFullscreen) {
-                    video.requestFullscreen();
-                  }
-                }}
-              >
-                <source src="/videos/walk.MP4" type="video/mp4" />
-              </video>
-            </div>
-            <div className="col-md-6 col-lg-4">
-              <video
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="metadata"
-                controls
-                onClick={(event) => {
-                  const video = event.currentTarget;
-                  if (video.requestFullscreen) {
-                    video.requestFullscreen();
-                  }
-                }}
-              >
-                <source src="/videos/water.MP4" type="video/mp4" />
-              </video>
-            </div>
-            <div className="col-md-6 col-lg-4">
-              <video
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="metadata"
-                controls
-                onClick={(event) => {
-                  const video = event.currentTarget;
-                  if (video.requestFullscreen) {
-                    video.requestFullscreen();
-                  }
-                }}
-              >
-                <source src="/videos/yacht.mp4" type="video/mp4" />
-              </video>
-            </div>
-            <div className="col-md-6 col-lg-4">
-              <video
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="metadata"
-                controls
-                onClick={(event) => {
-                  const video = event.currentTarget;
-                  if (video.requestFullscreen) {
-                    video.requestFullscreen();
-                  }
-                }}
-              >
-                <source src="/videos/yacht_rainbow.MP4" type="video/mp4" />
-              </video>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {[
+                '/videos/mountain_walk.MP4',
+                '/videos/walk.MP4',
+                '/videos/water.MP4',
+                '/videos/yacht.mp4',
+                '/videos/yacht_rainbow.MP4',
+              ].map((src) => (
+                <video
+                  key={src}
+                  autoPlay muted loop playsInline preload="metadata" controls
+                  className={VIDEO_CLASSES}
+                  onClick={(e) => e.currentTarget.requestFullscreen?.()}
+                >
+                  <source src={src} type="video/mp4" />
+                </video>
+              ))}
             </div>
           </div>
-        </div>
         </div>
       </div>
 
-      {/* Neo1 Section */}
-      <div className="neo1-section">
-        <div className="neo1-close hover-target"></div>
-        <div className="section-content">
-          <div className="container">
-          <div className="row justify-content-center">
-            <div className="col-12 text-center">
-              <h3>Indoor</h3>
-            </div>
-            <div className="col-12 mt-3 text-center">
-              <p><span>DJI NEO</span></p>
-            </div>
-            <div className="col-12 text-center">
-              <p>
-                Camera: NEO Camera Module (wide-angle CMOS)<br />
-                Use: Interiors • Hospitality • Close Proximity
-              </p>
-            </div>
-            <div className="col-12 text-center mt-4">
-              <p>There’s nothing here yet.</p>
-            </div>
+      {/* ── Indoor Panel ─────────────────────────────── */}
+      <div className="neo1-panel pf-panel">
+        <div className="neo1-close" />
+        <div className="pf-scroll">
+          <div className="max-w-4xl mx-auto text-center">
+            <h3>Indoor</h3>
+            <p className="mt-4"><span>DJI NEO</span></p>
+            <p className="mt-2">NEO wide-angle CMOS · Interiors · Hospitality · Close Proximity</p>
+            <p className="mt-8 text-muted/60 text-sm italic">Footage coming soon.</p>
           </div>
-        </div>        </div>      </div>
+        </div>
+      </div>
 
-      {/* Camera Work Section */}
-      <div className="camera-section">
-        <div className="camera-close hover-target"></div>
-        <div className="section-content">
-          <div className="container">
-          <div className="row justify-content-center">
-            <div className="col-12 text-center">
+      {/* ── Camera Work Panel ────────────────────────── */}
+      <div className="camera-panel pf-panel">
+        <div className="camera-close" />
+        <div className="pf-scroll">
+          <div className="max-w-5xl mx-auto">
+            <div className="text-center mb-10">
               <h3>Camera Work</h3>
+              <p className="mt-3"><span>Canon 750D</span></p>
+              <p className="mt-1">EF-S 18-55mm IS · RF 75-300mm F4-5.6 · Macro</p>
             </div>
-            <div className="col-12 mt-3 text-center">
-              <p><span>Our Camera Equipment</span></p>
-            </div>
-            <div className="col-12 text-center">
-              <p>
-                Canon 750D — Camera Body<br />
-                Canon EF-S 18-55mm — Image Stabilizer (0.25m)<br />
-                Canon RF 75-300mm F4-5.6 — Macro Lens
-              </p>
-            </div>
-            <div className="col-12 mt-4">
-              <div className="row g-3">
-                <div className="col-6 col-md-4">
-                  <img src="/photos/DRONE1_1.1.1.jpg" alt="Drone 1" />
-                </div>
-                <div className="col-6 col-md-4">
-                  <img src="/photos/DRONE2_1.1.2.jpg" alt="Drone 2" />
-                </div>
-                <div className="col-6 col-md-4">
-                  <img src="/photos/CONTROLLER2_1.1.3.jpg" alt="Controller" />
-                </div>
-                <div className="col-6 col-md-4">
-                  <img src="/photos/DRON3_1.1.4.jpg" alt="Drone 3" />
-                </div>
-                <div className="col-6 col-md-4">
-                  <img src="/photos/MAX2_1.1.5.jpg" alt="Max 2" />
-                </div>
-                <div className="col-6 col-md-4">
-                  <img src="/photos/DRONE4_1.1.6.jpg" alt="Drone 4" />
-                </div>
-                <div className="col-6 col-md-4">
-                  <img src="/photos/DRONE5_1.1.7.jpg" alt="Drone 5" />
-                </div>
-              </div>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+              {[
+                ['/photos/DRONE1_1.1.1.jpg', 'Drone setup'],
+                ['/photos/DRONE2_1.1.2.jpg', 'Drone close-up'],
+                ['/photos/CONTROLLER2_1.1.3.jpg', 'Controller'],
+                ['/photos/DRON3_1.1.4.jpg', 'Drone 3'],
+                ['/photos/MAX2_1.1.5.jpg', 'Max 2'],
+                ['/photos/DRONE4_1.1.6.jpg', 'Drone 4'],
+                ['/photos/DRONE5_1.1.7.jpg', 'Drone 5'],
+              ].map(([src, alt]) => (
+                <img key={src} src={src} alt={alt} className="w-full h-auto object-cover rounded-lg shadow-xl mt-0" />
+              ))}
             </div>
           </div>
         </div>
-        </div>
       </div>
-
-      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" />
     </>
   );
 }
