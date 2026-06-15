@@ -192,6 +192,200 @@ export default function Home() {
     return () => observer.disconnect();
   }, []);
 
+<<<<<<< HEAD
+=======
+  useEffect(() => {
+    const handleParallax = () => {
+      const parallaxBgs = document.querySelectorAll<HTMLElement>(".parallax-bg");
+      parallaxBgs.forEach((el) => {
+        const parentCase = el.closest(".portfolio-case") as HTMLElement;
+        if (!parentCase) return;
+        const rate = parseFloat(parentCase.getAttribute("data-parallax-rate") || "0.3");
+        const rect = el.getBoundingClientRect();
+        const offset = (window.innerHeight - rect.top) * rate;
+        el.style.transform = `translateY(${offset}px)`;
+      });
+    };
+
+    window.addEventListener("scroll", handleParallax, { passive: true });
+    handleParallax();
+    return () => window.removeEventListener("scroll", handleParallax);
+  }, []);
+
+  // Three.js Animation for Footer
+  useEffect(() => {
+    const loadThreeJS = async () => {
+      const THREE = await import('three');
+      const { FontLoader } = await import('three/examples/jsm/loaders/FontLoader.js');
+      const { TextGeometry } = await import('three/examples/jsm/geometries/TextGeometry.js');
+
+      const canvas = document.querySelector('.webgl-footer') as HTMLCanvasElement;
+      if (!canvas) return;
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(
+        75,
+        canvas.offsetWidth / canvas.offsetHeight,
+        0.1,
+        1000
+      );
+      camera.position.z = 5;
+
+      const renderer = new THREE.WebGLRenderer({
+        canvas,
+        antialias: true,
+      });
+      renderer.setSize(canvas.offsetWidth, canvas.offsetHeight);
+
+      // Font
+      const fontLoader = new FontLoader();
+      fontLoader.load(
+        'https://raw.githubusercontent.com/danielyl123/person/refs/heads/main/fonts/helvetiker_regular.typeface.json',
+        (font) => {
+          const textGeometry = new TextGeometry("LET'S FLY", {
+            font,
+            size: 1,
+            depth: 0,
+            curveSegments: 5,
+            bevelEnabled: true,
+            bevelThickness: 0,
+            bevelSize: 0,
+            bevelOffset: 0,
+            bevelSegments: 4,
+          });
+          textGeometry.computeBoundingBox();
+          textGeometry.center();
+
+          const textMaterial = new THREE.MeshBasicMaterial();
+          textMaterial.wireframe = false;
+          const text = new THREE.Mesh(textGeometry, textMaterial);
+          scene.add(text);
+        }
+      );
+
+      const torusGeometry = new THREE.TorusGeometry(0.7, 0.4, 100, 60);
+      const torusMaterial = new THREE.MeshPhysicalMaterial();
+      torusMaterial.metalness = 0;
+      torusMaterial.roughness = 0;
+      torusMaterial.iridescence = 1;
+      torusMaterial.iridescenceIOR = 1.5;
+      torusMaterial.iridescenceThicknessRange = [100, 324];
+      torusMaterial.transmission = 1;
+      torusMaterial.ior = 1.2;
+      torusMaterial.thickness = 0.8;
+      const torus = new THREE.Mesh(torusGeometry, torusMaterial);
+      torus.position.z = 1;
+      scene.add(torus);
+
+      // Lights
+      const ambientLight = new THREE.AmbientLight(0xffffff, 10);
+      scene.add(ambientLight);
+
+      const pointLight = new THREE.PointLight(0xffffff, 10);
+      pointLight.position.set(-1, 2, 0);
+      scene.add(pointLight);
+
+      const pointLight2 = new THREE.PointLight(0xffffff, 10);
+      pointLight2.position.set(-1, -2, 0);
+      scene.add(pointLight2);
+
+      const pointLight3 = new THREE.PointLight(0xffffff, 10);
+      pointLight3.position.set(1, -2, 0);
+      scene.add(pointLight3);
+
+      const pointLight4 = new THREE.PointLight(0xffffff, 10);
+      pointLight4.position.set(1, 2, 0);
+      scene.add(pointLight4);
+
+      const clock = new THREE.Clock();
+      const tick = () => {
+        const elapsedTime = clock.getElapsedTime();
+        renderer.render(scene, camera);
+        torus.rotation.x = elapsedTime * 0.5;
+        torus.rotation.y = elapsedTime * 0.1;
+        requestAnimationFrame(tick);
+      };
+      tick();
+
+      const handleResize = () => {
+        if (!canvas) return;
+        camera.aspect = canvas.offsetWidth / canvas.offsetHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(canvas.offsetWidth, canvas.offsetHeight);
+      };
+
+      window.addEventListener('resize', handleResize);
+
+      return () => {
+        window.removeEventListener('resize', handleResize);
+        renderer.dispose();
+      };
+    };
+
+    loadThreeJS();
+  }, []);
+  const projects = [
+              {
+                title: "Highland Trail",
+                tag: "Landscape",
+                location: "UK",
+                video: "/videos/mountain_walk.mp4",
+              },
+              {
+                title: "Forest Path",
+                tag: "Lifestyle",
+                location: "UK",
+                video: "/videos/walk.MP4",
+              },
+              {
+                title: "Still Waters",
+                tag: "Waterscape",
+                location: "UK",
+                video: "/videos/water.MP4",
+              },
+              {
+                title: "Yacht Glide",
+                tag: "Marine",
+                location: "UK",
+                video: "/videos/yacht.mp4",
+              },
+              {
+                title: "Yacht Rainbow Run",
+                tag: "Marine",
+                location: "UK",
+                video: "/videos/yacht_rainbow.MP4",
+              },
+            ];
+
+            const services = [
+              {
+                title: "Aerial Cinematography",
+                copy: "Heavy-lift platforms carrying Arri and Red systems with stabilized, jib-like motion up to 400ft.",
+                bullets: ["Dual operator crews", "25kg payload class"],
+                tone: "light",
+              },
+              {
+                title: "Interior FPV Flight",
+                copy: "One-shot fly-throughs that stitch exterior context to interior atmosphere with cine-whoops and gyro-stabilized optics.",
+                bullets: ["Sub-500g cine-whoops", "4K 10-bit capture"],
+                tone: "muted",
+              },
+              {
+                title: "Photogrammetry & 3D",
+                copy: "Digital twins with orthomosaics and point clouds for architectural visualization and planning.",
+                bullets: ["1cm/px accuracy", "Thermal mapping"],
+                tone: "dark",
+              },
+            ];
+
+            const gallery = [
+              "/videos/mountain_walk.mp4",
+              "/videos/walk.MP4",
+              "/videos/water.MP4",
+              "/videos/yacht.mp4",
+            ];
+
+>>>>>>> 970bfa18d180a91cc05475b3ea60f7ab14b49a5a
   return (
     <>
       <Header />

@@ -33,6 +33,7 @@ export default function TeamPage() {
   return (
     <>
       <Header />
+<<<<<<< HEAD
 
       {/* Hero banner */}
       <section
@@ -143,6 +144,46 @@ export default function TeamPage() {
           Book a Shoot →
         </a>
       </section>
+=======
+      <div className="relative min-h-screen w-full overflow-hidden bg-[#1a2e1f]">
+        {/* Natural dark green base background */}
+        <div className="absolute inset-0 -z-20 bg-[#1a2e1f] w-full h-full" />
+        {/* Animated etheral-shadow overlay */}
+        <div className="absolute inset-0 -z-10 pointer-events-none">
+          <EtheralShadow
+            color="rgba(18, 38, 22, 0.55)"
+            animation={{ scale: 80, speed: 80 }}
+            noise={{ opacity: 0.4, scale: 1.2 }}
+            sizing="fill"
+            style={{ width: '100vw', height: '100vh', mixBlendMode: 'soft-light' }}
+          />
+        </div>
+        <main className="h-full text-white py-20 px-4 overflow-y-auto">
+          <h1 className="text-4xl md:text-6xl font-extrabold text-center mb-12 tracking-tight">Meet the Team</h1>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 max-w-7xl mx-auto">
+            {team.map((member) => (
+              <Link href={`/portfolio/${member.portfolioAnchor}`} key={member.name} className="group flex flex-col bg-[#181f25] rounded-2xl shadow-lg hover:shadow-2xl transition overflow-hidden border border-[#232b32] hover:border-[#7a9aa8]">
+                <div className="relative w-full aspect-[4/3] bg-[#232b32] overflow-hidden flex items-center justify-center">
+                  <Image 
+                    src={member.img} 
+                    alt={member.name} 
+                    fill 
+                    className="object-cover group-hover:scale-105 transition-transform duration-300" 
+                    style={{objectPosition: 'center'}} 
+                    sizes="(max-width: 768px) 100vw, 33vw" 
+                  />
+                </div>
+                <div className="flex-1 flex flex-col justify-between p-6 text-center">
+                  <h2 className="text-2xl font-bold mb-2 group-hover:text-white transition">{member.name}</h2>
+                  <p className="text-base text-white/80 mb-4 min-h-[60px]">{member.description}</p>
+                  <span className="inline-block mt-auto text-white font-semibold text-sm group-hover:underline">View Portfolio →</span>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </main>
+      </div>
+>>>>>>> 970bfa18d180a91cc05475b3ea60f7ab14b49a5a
     </>
   );
 }

@@ -262,6 +262,7 @@ export default function PortfolioPage() {
               <p className="mt-3"><span>DJI Mavic 2 Pro · DJI Mini 2 Pro</span></p>
               <p className="mt-1">Hasselblad L1D-20c &amp; 1/1.3″ CMOS · Real Estate · Tourism · Marine</p>
             </div>
+<<<<<<< HEAD
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {[
                 '/videos/mountain_walk.MP4',
@@ -279,6 +280,106 @@ export default function PortfolioPage() {
                   <source src={src} type="video/mp4" />
                 </video>
               ))}
+=======
+            <div className="col-12 mt-3 text-center">
+              <p><span>DJI Mavic 2 Pro & DJI Mini 2 Pro</span></p>
+            </div>
+            <div className="col-12 text-center">
+              <p>
+                Cameras: Hasselblad L1D-20c & 1/1.3″ CMOS<br />
+                Use: Real Estate • Automotive • Tourism • Marine
+              </p>
+            </div>
+            <div className="col-md-6 col-lg-4">
+              <video
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                controls
+                onClick={(event) => {
+                  const video = event.currentTarget;
+                  if (video.requestFullscreen) {
+                    video.requestFullscreen();
+                  }
+                }}
+              >
+                <source src="/videos/mountain_walk.mp4" type="video/mp4" />
+              </video>
+            </div>
+            <div className="col-md-6 col-lg-4">
+              <video
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                controls
+                onClick={(event) => {
+                  const video = event.currentTarget;
+                  if (video.requestFullscreen) {
+                    video.requestFullscreen();
+                  }
+                }}
+              >
+                <source src="/videos/walk.MP4" type="video/mp4" />
+              </video>
+            </div>
+            <div className="col-md-6 col-lg-4">
+              <video
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                controls
+                onClick={(event) => {
+                  const video = event.currentTarget;
+                  if (video.requestFullscreen) {
+                    video.requestFullscreen();
+                  }
+                }}
+              >
+                <source src="/videos/water.MP4" type="video/mp4" />
+              </video>
+            </div>
+            <div className="col-md-6 col-lg-4">
+              <video
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                controls
+                onClick={(event) => {
+                  const video = event.currentTarget;
+                  if (video.requestFullscreen) {
+                    video.requestFullscreen();
+                  }
+                }}
+              >
+                <source src="/videos/yacht.mp4" type="video/mp4" />
+              </video>
+            </div>
+            <div className="col-md-6 col-lg-4">
+              <video
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                controls
+                onClick={(event) => {
+                  const video = event.currentTarget;
+                  if (video.requestFullscreen) {
+                    video.requestFullscreen();
+                  }
+                }}
+              >
+                <source src="/videos/yacht_rainbow.MP4" type="video/mp4" />
+              </video>
+>>>>>>> 970bfa18d180a91cc05475b3ea60f7ab14b49a5a
             </div>
           </div>
         </div>
