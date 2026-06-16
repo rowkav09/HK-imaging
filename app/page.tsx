@@ -5,10 +5,6 @@ import Header from './components/Header';
 import Hero from './components/home/Hero';
 import { Footer } from '../components/ui/footer-section';
 
-/* ── Connection quality detection ───────────────────────────────────────────
-   Uses the Network Information API (Chrome/Android).
-   Falls back to 'fast' on browsers that don't support it (Safari, Firefox).
-───────────────────────────────────────────────────────────────────────────── */
 type Quality = 'fast' | 'moderate' | 'slow';
 
 function useConnectionQuality(): Quality {
@@ -17,7 +13,7 @@ function useConnectionQuality(): Quality {
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const conn = (navigator as any).connection ?? (navigator as any).mozConnection ?? (navigator as any).webkitConnection;
-    if (!conn) return; // API unavailable — assume fast
+    if (!conn) return;
 
     const check = () => {
       const type: string = conn.effectiveType ?? '';
@@ -35,11 +31,6 @@ function useConnectionQuality(): Quality {
   return quality;
 }
 
-/* ── VideoInView ─────────────────────────────────────────────────────────────
-   • Fast/moderate: plays automatically when ≥10% in viewport, pauses when not.
-   • Slow: shows a "tap to load" overlay instead of auto-downloading the video.
-   preload="none" = zero bytes fetched until play() is called.
-───────────────────────────────────────────────────────────────────────────── */
 function VideoInView({
   src,
   className,
@@ -52,7 +43,6 @@ function VideoInView({
   const ref = useRef<HTMLVideoElement>(null);
   const [unlocked, setUnlocked] = useState(quality !== 'slow');
 
-  // When user taps overlay on slow connection, also start playback
   useEffect(() => {
     if (!unlocked) return;
     const video = ref.current;
@@ -74,7 +64,6 @@ function VideoInView({
         <source src={src} type="video/mp4" />
       </video>
 
-      {/* Slow-connection overlay — tap to dismiss and load the video */}
       {!unlocked && (
         <div
           className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-3 cursor-pointer"
@@ -96,7 +85,6 @@ function VideoInView({
   );
 }
 
-/* ── Data ────────────────────────────────────────────────────────────────────*/
 const projects = [
   { title: 'Highland Trail',    tag: 'Landscape', location: 'UK', video: '/videos/mountain_walk.MP4' },
   { title: 'Forest Path',       tag: 'Lifestyle', location: 'UK', video: '/videos/walk.MP4'          },
@@ -170,11 +158,9 @@ const stats = [
   { value: '48hr', label: 'Edit Turnaround' },
 ];
 
-/* ── Page ────────────────────────────────────────────────────────────────────*/
 export default function Home() {
   const quality = useConnectionQuality();
 
-  // Reveal-on-scroll for .reveal elements
   useEffect(() => {
     const items = Array.from(document.querySelectorAll<HTMLElement>('.reveal'));
     const observer = new IntersectionObserver(
@@ -192,200 +178,6 @@ export default function Home() {
     return () => observer.disconnect();
   }, []);
 
-<<<<<<< HEAD
-=======
-  useEffect(() => {
-    const handleParallax = () => {
-      const parallaxBgs = document.querySelectorAll<HTMLElement>(".parallax-bg");
-      parallaxBgs.forEach((el) => {
-        const parentCase = el.closest(".portfolio-case") as HTMLElement;
-        if (!parentCase) return;
-        const rate = parseFloat(parentCase.getAttribute("data-parallax-rate") || "0.3");
-        const rect = el.getBoundingClientRect();
-        const offset = (window.innerHeight - rect.top) * rate;
-        el.style.transform = `translateY(${offset}px)`;
-      });
-    };
-
-    window.addEventListener("scroll", handleParallax, { passive: true });
-    handleParallax();
-    return () => window.removeEventListener("scroll", handleParallax);
-  }, []);
-
-  // Three.js Animation for Footer
-  useEffect(() => {
-    const loadThreeJS = async () => {
-      const THREE = await import('three');
-      const { FontLoader } = await import('three/examples/jsm/loaders/FontLoader.js');
-      const { TextGeometry } = await import('three/examples/jsm/geometries/TextGeometry.js');
-
-      const canvas = document.querySelector('.webgl-footer') as HTMLCanvasElement;
-      if (!canvas) return;
-
-      const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(
-        75,
-        canvas.offsetWidth / canvas.offsetHeight,
-        0.1,
-        1000
-      );
-      camera.position.z = 5;
-
-      const renderer = new THREE.WebGLRenderer({
-        canvas,
-        antialias: true,
-      });
-      renderer.setSize(canvas.offsetWidth, canvas.offsetHeight);
-
-      // Font
-      const fontLoader = new FontLoader();
-      fontLoader.load(
-        'https://raw.githubusercontent.com/danielyl123/person/refs/heads/main/fonts/helvetiker_regular.typeface.json',
-        (font) => {
-          const textGeometry = new TextGeometry("LET'S FLY", {
-            font,
-            size: 1,
-            depth: 0,
-            curveSegments: 5,
-            bevelEnabled: true,
-            bevelThickness: 0,
-            bevelSize: 0,
-            bevelOffset: 0,
-            bevelSegments: 4,
-          });
-          textGeometry.computeBoundingBox();
-          textGeometry.center();
-
-          const textMaterial = new THREE.MeshBasicMaterial();
-          textMaterial.wireframe = false;
-          const text = new THREE.Mesh(textGeometry, textMaterial);
-          scene.add(text);
-        }
-      );
-
-      const torusGeometry = new THREE.TorusGeometry(0.7, 0.4, 100, 60);
-      const torusMaterial = new THREE.MeshPhysicalMaterial();
-      torusMaterial.metalness = 0;
-      torusMaterial.roughness = 0;
-      torusMaterial.iridescence = 1;
-      torusMaterial.iridescenceIOR = 1.5;
-      torusMaterial.iridescenceThicknessRange = [100, 324];
-      torusMaterial.transmission = 1;
-      torusMaterial.ior = 1.2;
-      torusMaterial.thickness = 0.8;
-      const torus = new THREE.Mesh(torusGeometry, torusMaterial);
-      torus.position.z = 1;
-      scene.add(torus);
-
-      // Lights
-      const ambientLight = new THREE.AmbientLight(0xffffff, 10);
-      scene.add(ambientLight);
-
-      const pointLight = new THREE.PointLight(0xffffff, 10);
-      pointLight.position.set(-1, 2, 0);
-      scene.add(pointLight);
-
-      const pointLight2 = new THREE.PointLight(0xffffff, 10);
-      pointLight2.position.set(-1, -2, 0);
-      scene.add(pointLight2);
-
-      const pointLight3 = new THREE.PointLight(0xffffff, 10);
-      pointLight3.position.set(1, -2, 0);
-      scene.add(pointLight3);
-
-      const pointLight4 = new THREE.PointLight(0xffffff, 10);
-      pointLight4.position.set(1, 2, 0);
-      scene.add(pointLight4);
-
-      const clock = new THREE.Clock();
-      const tick = () => {
-        const elapsedTime = clock.getElapsedTime();
-        renderer.render(scene, camera);
-        torus.rotation.x = elapsedTime * 0.5;
-        torus.rotation.y = elapsedTime * 0.1;
-        requestAnimationFrame(tick);
-      };
-      tick();
-
-      const handleResize = () => {
-        if (!canvas) return;
-        camera.aspect = canvas.offsetWidth / canvas.offsetHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(canvas.offsetWidth, canvas.offsetHeight);
-      };
-
-      window.addEventListener('resize', handleResize);
-
-      return () => {
-        window.removeEventListener('resize', handleResize);
-        renderer.dispose();
-      };
-    };
-
-    loadThreeJS();
-  }, []);
-  const projects = [
-              {
-                title: "Highland Trail",
-                tag: "Landscape",
-                location: "UK",
-                video: "/videos/mountain_walk.mp4",
-              },
-              {
-                title: "Forest Path",
-                tag: "Lifestyle",
-                location: "UK",
-                video: "/videos/walk.MP4",
-              },
-              {
-                title: "Still Waters",
-                tag: "Waterscape",
-                location: "UK",
-                video: "/videos/water.MP4",
-              },
-              {
-                title: "Yacht Glide",
-                tag: "Marine",
-                location: "UK",
-                video: "/videos/yacht.mp4",
-              },
-              {
-                title: "Yacht Rainbow Run",
-                tag: "Marine",
-                location: "UK",
-                video: "/videos/yacht_rainbow.MP4",
-              },
-            ];
-
-            const services = [
-              {
-                title: "Aerial Cinematography",
-                copy: "Heavy-lift platforms carrying Arri and Red systems with stabilized, jib-like motion up to 400ft.",
-                bullets: ["Dual operator crews", "25kg payload class"],
-                tone: "light",
-              },
-              {
-                title: "Interior FPV Flight",
-                copy: "One-shot fly-throughs that stitch exterior context to interior atmosphere with cine-whoops and gyro-stabilized optics.",
-                bullets: ["Sub-500g cine-whoops", "4K 10-bit capture"],
-                tone: "muted",
-              },
-              {
-                title: "Photogrammetry & 3D",
-                copy: "Digital twins with orthomosaics and point clouds for architectural visualization and planning.",
-                bullets: ["1cm/px accuracy", "Thermal mapping"],
-                tone: "dark",
-              },
-            ];
-
-            const gallery = [
-              "/videos/mountain_walk.mp4",
-              "/videos/walk.MP4",
-              "/videos/water.MP4",
-              "/videos/yacht.mp4",
-            ];
-
->>>>>>> 970bfa18d180a91cc05475b3ea60f7ab14b49a5a
   return (
     <>
       <Header />
@@ -412,7 +204,6 @@ export default function Home() {
               </p>
             </div>
 
-            {/* Services grid */}
             <div className="reveal grid grid-cols-2 gap-x-6 gap-y-6 sm:grid-cols-3 lg:grid-cols-6 pt-8 border-t border-white/[0.07]">
               {[
                 ['Real Estate',       'Exteriors, interiors, neighbourhood context, luxury listings.'],
@@ -439,7 +230,6 @@ export default function Home() {
                 <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-muted">
                   02 — Portfolio
                 </span>
-                {/* Connection quality badge */}
                 <span className="flex items-center gap-1.5 font-mono text-[9px] uppercase tracking-wider"
                   style={{ color: quality === 'fast' ? '#5a9470' : quality === 'moderate' ? '#c9a45f' : '#b87a5a' }}>
                   <span className="w-1.5 h-1.5 rounded-full inline-block"
@@ -465,15 +255,12 @@ export default function Home() {
                   }`}
                   style={{ aspectRatio: '4/3' }}
                 >
-                  {/* Video */}
                   <VideoInView
                     src={project.video}
                     quality={quality}
                     className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
-                  {/* Gradient */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                  {/* Meta */}
                   <div className="absolute inset-x-0 bottom-0 p-4 md:p-5">
                     <span
                       className="inline-block mb-2 rounded px-2 py-0.5 font-mono text-[9px] uppercase tracking-widest"
@@ -580,7 +367,6 @@ export default function Home() {
                   Project Pricing
                 </h2>
               </div>
-              {/* Scroll arrows */}
               <div className="flex gap-2 shrink-0">
                 <button
                   onClick={() => document.getElementById('pkg-carousel')?.scrollBy({ left: -280, behavior: 'smooth' })}
@@ -605,7 +391,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Carousel */}
             <div
               id="pkg-carousel"
               className="no-scrollbar flex gap-4 overflow-x-auto pb-2 snap-x snap-mandatory reveal"
@@ -633,7 +418,6 @@ export default function Home() {
               ))}
             </div>
 
-            {/* Edit options + add-ons */}
             <div className="reveal mt-5 grid gap-4 md:grid-cols-2">
               <div className="equip-card">
                 <h4 className="text-sm font-semibold text-ink mb-3">Edit Options</h4>
@@ -682,30 +466,27 @@ export default function Home() {
                 05 — Start a Project
               </span>
               <h2 className="mt-4 font-display text-4xl leading-[1.05] tracking-tight text-ink md:text-6xl lg:text-7xl">
-                Let's work<br />
+                Let&apos;s work<br />
                 <span style={{ color: '#c8a56a' }}>together.</span>
               </h2>
               <p className="mt-6 max-w-xl text-base text-muted leading-relaxed">
-                Tell us about your shoot — location, type, timeline. We'll come back within
+                Tell us about your shoot — location, type, timeline. We&apos;ll come back within
                 24 hours with a tailored quote.
               </p>
             </div>
 
             <div className="reveal mt-10 flex flex-col sm:flex-row items-start sm:items-center gap-4">
-              {/* Primary CTA — update this email */}
               <a
                 href="mailto:rowkav0809@gmail.com"
                 className="btn-gold no-underline text-sm"
               >
                 Send an Enquiry →
               </a>
-              {/* Secondary: direct email visible */}
               <span className="text-muted text-sm font-mono">
                 rowkav0809@gmail.com
               </span>
             </div>
 
-            {/* What to expect grid */}
             <div className="reveal mt-16 grid grid-cols-1 sm:grid-cols-3 gap-6 pt-10 border-t border-white/[0.07]">
               {[
                 ['24 hr response',  'We reply to every enquiry within one business day.'],
@@ -724,7 +505,6 @@ export default function Home() {
         <Footer />
       </main>
 
-      {/* ── Mobile sticky CTA ──────────────────────────────────────────── */}
       <a
         href="#contact"
         className="btn-gold fixed bottom-5 left-1/2 -translate-x-1/2 z-30 shadow-lg md:hidden no-underline text-xs px-6 py-3"
