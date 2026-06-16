@@ -33,14 +33,12 @@ export default function TeamPage() {
   return (
     <>
       <Header />
-<<<<<<< HEAD
 
       {/* Hero banner */}
       <section
         className="relative flex flex-col items-center justify-center text-center px-6 py-28 md:py-36 overflow-hidden"
         style={{ background: '#0d1410' }}
       >
-        {/* Subtle radial glow */}
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
@@ -87,7 +85,6 @@ export default function TeamPage() {
                 (e.currentTarget as HTMLElement).style.boxShadow  = 'none';
               }}
             >
-              {/* Image */}
               <div className="relative w-full aspect-[4/3] overflow-hidden">
                 <Image
                   src={p.img}
@@ -109,7 +106,6 @@ export default function TeamPage() {
                 </span>
               </div>
 
-              {/* Body */}
               <div className="flex flex-col flex-1 p-5">
                 <h2 className="font-display text-lg font-semibold text-ink tracking-tight mb-2">
                   {p.name}
@@ -138,52 +134,12 @@ export default function TeamPage() {
           Ready to shoot?
         </p>
         <h2 className="font-display font-bold text-ink text-2xl md:text-3xl mb-6">
-          Let's get in the air.
+          Let&apos;s get in the air.
         </h2>
         <a href="/#contact" className="btn-gold no-underline">
           Book a Shoot →
         </a>
       </section>
-=======
-      <div className="relative min-h-screen w-full overflow-hidden bg-[#1a2e1f]">
-        {/* Natural dark green base background */}
-        <div className="absolute inset-0 -z-20 bg-[#1a2e1f] w-full h-full" />
-        {/* Animated etheral-shadow overlay */}
-        <div className="absolute inset-0 -z-10 pointer-events-none">
-          <EtheralShadow
-            color="rgba(18, 38, 22, 0.55)"
-            animation={{ scale: 80, speed: 80 }}
-            noise={{ opacity: 0.4, scale: 1.2 }}
-            sizing="fill"
-            style={{ width: '100vw', height: '100vh', mixBlendMode: 'soft-light' }}
-          />
-        </div>
-        <main className="h-full text-white py-20 px-4 overflow-y-auto">
-          <h1 className="text-4xl md:text-6xl font-extrabold text-center mb-12 tracking-tight">Meet the Team</h1>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 max-w-7xl mx-auto">
-            {team.map((member) => (
-              <Link href={`/portfolio/${member.portfolioAnchor}`} key={member.name} className="group flex flex-col bg-[#181f25] rounded-2xl shadow-lg hover:shadow-2xl transition overflow-hidden border border-[#232b32] hover:border-[#7a9aa8]">
-                <div className="relative w-full aspect-[4/3] bg-[#232b32] overflow-hidden flex items-center justify-center">
-                  <Image 
-                    src={member.img} 
-                    alt={member.name} 
-                    fill 
-                    className="object-cover group-hover:scale-105 transition-transform duration-300" 
-                    style={{objectPosition: 'center'}} 
-                    sizes="(max-width: 768px) 100vw, 33vw" 
-                  />
-                </div>
-                <div className="flex-1 flex flex-col justify-between p-6 text-center">
-                  <h2 className="text-2xl font-bold mb-2 group-hover:text-white transition">{member.name}</h2>
-                  <p className="text-base text-white/80 mb-4 min-h-[60px]">{member.description}</p>
-                  <span className="inline-block mt-auto text-white font-semibold text-sm group-hover:underline">View Portfolio →</span>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </main>
-      </div>
->>>>>>> 970bfa18d180a91cc05475b3ea60f7ab14b49a5a
     </>
   );
 }
